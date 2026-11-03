@@ -103,25 +103,44 @@ WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
 
 # Database
-# Uses persistent SQLite in /app/data (Docker Volume in Coolify) or local ./data/
-# Supports DATABASE_URL if PostgreSQL is configured
-data_dir_env = os.environ.get('DATA_DIR')
-if data_dir_env:
-    data_dir = Path(data_dir_env)
-elif os.path.exists('/app/data'):
-    data_dir = Path('/app/data')
-else:
-    data_dir = BASE_DIR / 'data'
+# Si se define DB_HOST en las variables de entorno, se conecta automáticamente a PostgreSQL.
+# En caso contrario, utiliza SQLite persistente en /app/data o ./data/
+DB_HOST = os.environ.get('DB_HOST', '').strip()
+DB_NAME = os.environ.get('DB_NAME', 'snaf_organigrama').strip()
+DB_USER = os.environ.get('DB_USER', 'postgres').strip()
+DB_PASSWORD = os.environ.get('DB_PASSWORD', '').strip()
+DB_PORT = os.environ.get('DB_PORT', '5432').strip() or '5432'
 
-data_dir.mkdir(parents=True, exist_ok=True)
-db_sqlite_path = data_dir / 'db.sqlite3'
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(db_sqlite_path),
+if DB_HOST:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
+            'CONN_MAX_AGE': 60,
+        }
     }
-}
+else:
+    data_dir_env = os.environ.get('DATA_DIR')
+    if data_dir_env:
+        data_dir = Path(data_dir_env)
+    elif os.path.exists('/app/data'):
+        data_dir = Path('/app/data')
+    else:
+        data_dir = BASE_DIR / 'data'
+
+    data_dir.mkdir(parents=True, exist_ok=True)
+    db_sqlite_path = data_dir / 'db.sqlite3'
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(db_sqlite_path),
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [

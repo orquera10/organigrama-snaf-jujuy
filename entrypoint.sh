@@ -6,6 +6,10 @@ echo "==> [SNAF Organigrama] Iniciando contenedor..."
 # Asegurar permisos del directorio de datos persistente (Coolify Volume)
 mkdir -p /app/data
 
+# 0. Si se configuró PostgreSQL (DB_HOST), verificar y crear la base de datos si no existe
+echo "==> [SNAF Organigrama] Verificando motor de base de datos..."
+python ensure_postgres_db.py
+
 # 1. Aplicar migraciones pendientes
 echo "==> [SNAF Organigrama] Ejecutando migraciones de base de datos..."
 python manage.py migrate --noinput
