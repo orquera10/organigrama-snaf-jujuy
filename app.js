@@ -945,14 +945,13 @@
       }
     }
 
-    // Determine primary authority / person name
+    // Determine primary authority / person name (leave empty if no responsable or placeholder 'A designar')
     let primaryPersonName = '';
+    const rawResp = (sector.responsable || '').trim();
     if (sector.id === 'sec-snaf') {
       primaryPersonName = 'Dra. Marta Iriarte';
-    } else if (sector.responsable) {
-      primaryPersonName = formatPersonName(sector.responsable);
-    } else {
-      primaryPersonName = 'A designar';
+    } else if (rawResp && normText(rawResp) !== 'a designar') {
+      primaryPersonName = formatPersonName(rawResp);
     }
 
     const hasSubordinates = staff.length >= 1;
@@ -975,9 +974,11 @@
       <div class="card-content-inner">
         <div class="sector-title">${escapeHtml(sector.nombre)}</div>
         
+        ${primaryPersonName ? `
         <div class="sector-person-compact">
           <div class="sector-person-name">${escapeHtml(primaryPersonName)}</div>
         </div>
+        ` : ''}
 
         ${hasSubordinates ? `
           <div class="card-staff-expanded">
@@ -1713,7 +1714,7 @@
             ${parentSector ? `<span style="font-weight: 600; color: #0284c7;">${escapeHtml(parentSector.nombre)}</span>` : '<span style="color: #94a3b8;">Máximo Nivel</span>'}
           </td>
           <td>
-            <div><strong>${escapeHtml(sector.responsable || 'A designar')}</strong></div>
+            <div><strong>${escapeHtml((sector.responsable && normText(sector.responsable) !== 'a designar') ? sector.responsable : '')}</strong></div>
             <div style="font-size: 11px; color: #64748b;">${escapeHtml(sector.cargo_responsable || '')}</div>
           </td>
           <td>
@@ -2346,11 +2347,12 @@
     const drawer = document.getElementById('drawer-sector');
     if (!sector || !drawer) return;
 
+    const cleanDrawerResp = (sector.responsable && normText(sector.responsable) !== 'a designar') ? sector.responsable.trim() : '';
     document.getElementById('drawer-sector-type').textContent = sector.tipo || 'Sector';
     document.getElementById('drawer-sector-name').textContent = sector.nombre;
-    document.getElementById('drawer-authority-name').textContent = sector.responsable || 'A designar';
-    document.getElementById('drawer-authority-cargo').textContent = sector.cargo_responsable || 'Responsable';
-    document.getElementById('drawer-authority-avatar').textContent = getInitials(sector.responsable || sector.nombre);
+    document.getElementById('drawer-authority-name').textContent = cleanDrawerResp;
+    document.getElementById('drawer-authority-cargo').textContent = cleanDrawerResp ? (sector.cargo_responsable || 'Responsable') : '';
+    document.getElementById('drawer-authority-avatar').textContent = getInitials(cleanDrawerResp || sector.nombre);
     document.getElementById('drawer-sector-desc').textContent = sector.descripcion || '';
 
     // Extra info for OPD
