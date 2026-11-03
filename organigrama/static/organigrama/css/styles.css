@@ -135,26 +135,29 @@ body {
 
 /* Fila 1: Logo institucional + Contexto + Sesión de usuario */
 .header-top-row {
-  max-width: 1720px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   padding: 8px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  background: #ffffff;
   border-bottom: 1px solid var(--slate-100);
 }
 
 /* Fila 2: Acciones operativas (izq) + Indicadores clave en tiempo real (der) */
 .header-bottom-row {
-  max-width: 1720px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   padding: 8px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  background: #fafbfc;
+  background: #ffffff;
 }
 
 .header-top-right {
@@ -164,8 +167,9 @@ body {
 }
 
 .header-inner {
-  max-width: 1720px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -479,8 +483,9 @@ body {
 }
 
 .nav-inner {
-  max-width: 1720px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   padding: 0 24px;
   display: flex;
   align-items: center;
@@ -586,9 +591,9 @@ body {
 .main-content {
   flex: 1;
   min-height: 0;
-  max-width: 1720px;
+  max-width: 100%;
   width: 100%;
-  margin: 0 auto;
+  margin: 0;
   padding: 8px 24px 10px 24px;
   display: flex;
   flex-direction: column;
