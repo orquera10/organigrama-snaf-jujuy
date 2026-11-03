@@ -2341,19 +2341,104 @@
   // ========================================================================
   // DRAWER: FICHA DEL SECTOR (SLIDE-OVER)
   // ========================================================================
+  function getDrawerEncargados(sector) {
+    if (!sector || !state.personal) return [];
+    const resp = sector.responsable || '';
+    if (isPlaceholderResp(resp)) return [];
+    const parts = String(resp).split(/[\n/]+/).map(s => s.trim()).filter(Boolean);
+    const encargados = [];
+    const seen = new Set();
+    const directPool = state.personal.filter(p => (p.sectores || []).some(a => a.sector_id === sector.id));
+
+    parts.forEach(part => {
+      if (isPlaceholderResp(part)) return;
+      let matched = directPool.find(p => personMatchesSingleResp(p, part));
+      if (!matched) {
+        matched = state.personal.find(p => personMatchesSingleResp(p, part));
+      }
+      if (matched && !seen.has(matched.id)) {
+        seen.add(matched.id);
+        encargados.push(matched);
+      }
+    });
+
+    return encargados;
+  }
+
   function openSectorDrawer(sectorId) {
     activeDrawerSectorId = sectorId;
     const sector = getSectorById(sectorId);
     const drawer = document.getElementById('drawer-sector');
     if (!sector || !drawer) return;
 
-    const cleanDrawerResp = (sector.responsable && normText(sector.responsable) !== 'a designar') ? sector.responsable.trim() : '';
+    const cleanDrawerResp = (sector.responsable && !isPlaceholderResp(sector.responsable)) ? sector.responsable.trim() : '';
     document.getElementById('drawer-sector-type').textContent = sector.tipo || 'Sector';
     document.getElementById('drawer-sector-name').textContent = sector.nombre;
-    document.getElementById('drawer-authority-name').textContent = cleanDrawerResp;
-    document.getElementById('drawer-authority-cargo').textContent = cleanDrawerResp ? (sector.cargo_responsable || 'Responsable') : '';
-    document.getElementById('drawer-authority-avatar').textContent = getInitials(cleanDrawerResp || sector.nombre);
     document.getElementById('drawer-sector-desc').textContent = sector.descripcion || '';
+
+    const authContainer = document.getElementById('drawer-authority-container');
+    const encargados = getDrawerEncargados(sector);
+
+    if (authContainer) {
+      if (encargados.length > 0) {
+        authContainer.style.display = 'flex';
+        authContainer.innerHTML = encargados.map(person => {
+          const initials = getInitials((person.apellidos || '') + ' ' + (person.nombres || ''));
+          const thisRole = (person.sectores || []).find(s => s.sector_id === sectorId) ||
+                           (person.sectores || []).find(s => matchesSectorFilter({ sectores: [s] }, sectorId)) ||
+                           (person.sectores || [])[0] || {};
+          const otherSectors = (person.sectores || []).filter(s => s.sector_id !== thisRole.sector_id);
+          const roleLabel = sector.cargo_responsable || thisRole?.funcion || person.profesion || 'Responsable';
+
+          return `
+            <div style="background: white; border: 1px solid var(--border-color); border-radius: 10px; padding: 10px 12px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; transition: border-color 0.15s, box-shadow 0.15s;">
+              <div style="display: flex; align-items: flex-start; gap: 10px; flex: 1; cursor: pointer;" onclick="window.SNAF_APP.openViewPersonModal('${person.id}')" title="Clic para ver ficha completa del encargado">
+                <div class="authority-avatar" style="width: 38px; height: 38px; font-size: 13.5px; flex-shrink: 0;">${initials}</div>
+                <div style="flex: 1;">
+                  <div style="font-weight: 700; font-size: 13.5px; color: var(--slate-900);">
+                    ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
+                    ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;">⭐</span>` : ''}
+                  </div>
+                  <div style="font-size: 11.5px; color: #0284c7; font-weight: 600;">
+                    ${escapeHtml(roleLabel)}
+                  </div>
+                  ${person.correo ? `<div style="font-size: 11px; color: #64748b; margin-top: 2px;">${escapeHtml(person.correo)}</div>` : ''}
+                  ${otherSectors.length > 0 ? `
+                    <div style="margin-top: 5px; font-size: 10.5px; color: #b45309; background: #fef3c7; padding: 2px 6px; border-radius: 4px; display: inline-block;">
+                      ⭐ Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+                <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openViewPersonModal('${person.id}')" title="Ver ficha completa" style="padding: 4px 8px; font-size: 12px; background: white;">
+                  👁️ Ver
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openPersonModal('${person.id}')" title="Editar este encargado" style="padding: 4px 8px; font-size: 12px; background: white;">
+                  ✏️ Editar
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else if (cleanDrawerResp) {
+        authContainer.style.display = 'flex';
+        authContainer.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div class="authority-avatar" style="width: 38px; height: 38px; font-size: 14px;">
+              ${escapeHtml(getInitials(cleanDrawerResp))}
+            </div>
+            <div>
+              <div style="font-size: 13.5px; font-weight: 700;">${escapeHtml(cleanDrawerResp)}</div>
+              <div style="font-size: 11.5px; color: var(--slate-500);">${escapeHtml(sector.cargo_responsable || 'Responsable')}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        authContainer.style.display = 'none';
+        authContainer.innerHTML = '';
+      }
+    }
 
     // Extra info for OPD
     const opdExtra = document.getElementById('drawer-opd-extra-info');
