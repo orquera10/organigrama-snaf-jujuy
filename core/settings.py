@@ -113,15 +113,34 @@ WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
 
 # Database
-# Si se define DB_HOST en las variables de entorno, se conecta automáticamente a PostgreSQL.
-# En caso contrario, utiliza SQLite persistente en /app/data o ./data/
+# Si se define DB_HOST válido y alcanzable en las variables de entorno, se conecta a PostgreSQL.
+# Si DB_HOST está vacío, tiene el texto de ejemplo o no responde, usa SQLite persistente en /app/data sin caer.
 DB_HOST = os.environ.get('DB_HOST', '').strip()
-DB_NAME = os.environ.get('DB_NAME', 'snaf_organigrama').strip()
-DB_USER = os.environ.get('DB_USER', 'postgres').strip()
+DB_NAME = os.environ.get('DB_NAME', 'snaf_organigrama').strip() or 'snaf_organigrama'
+DB_USER = os.environ.get('DB_USER', 'postgres').strip() or 'postgres'
 DB_PASSWORD = os.environ.get('DB_PASSWORD', '').strip()
 DB_PORT = os.environ.get('DB_PORT', '5432').strip() or '5432'
 
-if DB_HOST:
+_invalid_hosts = {'', 'aqui_host_o_ip_de_tu_postgres', 'nombre-o-ip-de-tu-postgres', 'tu_host_postgres'}
+_use_postgres = False
+
+if DB_HOST.lower() not in _invalid_hosts:
+    try:
+        import psycopg2
+        _conn = psycopg2.connect(
+            dbname=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD,
+            host=DB_HOST,
+            port=DB_PORT,
+            connect_timeout=3,
+        )
+        _conn.close()
+        _use_postgres = True
+    except Exception:
+        _use_postgres = False
+
+if _use_postgres:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',

@@ -1,8 +1,9 @@
 """
 Script de inicialización automática para PostgreSQL.
 Se ejecuta en el arranque del contenedor (entrypoint.sh) antes de las migraciones de Django.
-Si las variables de entorno de PostgreSQL (DB_HOST) están configuradas y la base de datos (DB_NAME)
-no existe aún en el servidor Postgres, la crea automáticamente con codificación UTF-8.
+Si las variables de entorno de PostgreSQL (DB_HOST) están configuradas y el servidor responde,
+verifica si la base de datos (DB_NAME) existe y, si no, la crea automáticamente con codificación UTF-8.
+Si DB_HOST no está definido o tiene el texto de ejemplo, utiliza SQLite automáticamente sin bloquear el arranque.
 """
 
 import os
@@ -19,30 +20,37 @@ if env_file.exists():
     except ImportError:
         pass
 
+PLACEHOLDER_HOSTS = {
+    '',
+    'aqui_host_o_ip_de_tu_postgres',
+    'nombre-o-ip-de-tu-postgres',
+    'tu_host_postgres',
+}
+
 
 def ensure_database():
     db_host = os.environ.get('DB_HOST', '').strip()
-    if not db_host:
-        print("==> [DB Init] DB_HOST no definido. Usando base de datos SQLite local.")
+    if db_host.lower() in PLACEHOLDER_HOSTS:
+        print("==> [DB Init] DB_HOST no configurado (o con valor de ejemplo). Usando SQLite en /app/data/db.sqlite3.")
         return
 
-    db_name = os.environ.get('DB_NAME', 'snaf_organigrama').strip()
-    db_user = os.environ.get('DB_USER', 'postgres').strip()
+    db_name = os.environ.get('DB_NAME', 'snaf_organigrama').strip() or 'snaf_organigrama'
+    db_user = os.environ.get('DB_USER', 'postgres').strip() or 'postgres'
     db_password = os.environ.get('DB_PASSWORD', '').strip()
     db_port = os.environ.get('DB_PORT', '5432').strip() or '5432'
-    default_maint_db = os.environ.get('DB_MAINTENANCE_NAME', 'postgres').strip()
+    default_maint_db = os.environ.get('DB_MAINTENANCE_NAME', 'postgres').strip() or 'postgres'
 
     try:
         import psycopg2
         from psycopg2 import sql
         from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
     except ImportError:
-        print("==> [DB Init] ERROR: psycopg2-binary no está instalado.")
-        sys.exit(1)
+        print("==> [DB Init] AVISO: psycopg2-binary no instalado. Se usará SQLite.")
+        return
 
-    print(f"==> [DB Init] Verificando conexión a PostgreSQL en {db_host}:{db_port} (usuario: {db_user})...")
+    print(f"==> [DB Init] Verificando PostgreSQL en {db_host}:{db_port} (usuario: {db_user}, base: {db_name})...")
 
-    max_retries = 15
+    max_retries = 5
     retry_delay = 2
     conn = None
 
@@ -55,20 +63,19 @@ def ensure_database():
                 password=db_password,
                 host=db_host,
                 port=db_port,
-                connect_timeout=5
+                connect_timeout=3
             )
             conn_test.close()
-            print(f"==> [DB Init] La base de datos PostgreSQL '{db_name}' ya existe y está lista.")
+            print(f"==> [DB Init] Base de datos PostgreSQL '{db_name}' verificada y lista.")
             return
         except psycopg2.OperationalError as e:
             err_msg = str(e).lower()
-            # Si el error indica que la base no existe, pasamos a crearla conectando a 'postgres' / 'template1'
-            if f'"{db_name.lower()}" does not exist' in err_msg or 'does not exist' in err_msg or 'no existe' in err_msg:
+            if 'does not exist' in err_msg or 'no existe' in err_msg:
                 break
-            print(f"==> [DB Init] Esperando al servidor PostgreSQL ({attempt}/{max_retries}): {e}")
+            print(f"==> [DB Init] Intento {attempt}/{max_retries} conectando a PostgreSQL ({db_host}:{db_port}): {e}")
             if attempt == max_retries:
-                print("==> [DB Init] No se pudo conectar al servidor PostgreSQL tras varios intentos.")
-                sys.exit(1)
+                print("==> [DB Init] AVISO: No se pudo conectar a PostgreSQL. El sistema usará SQLite como respaldo para no interrumpir el servicio.")
+                return
             time.sleep(retry_delay)
 
     # 2. Conectar a la base de mantenimiento ('postgres' o 'template1') para crear DB_NAME
@@ -80,15 +87,15 @@ def ensure_database():
                 password=db_password,
                 host=db_host,
                 port=db_port,
-                connect_timeout=5
+                connect_timeout=4
             )
             break
         except psycopg2.OperationalError:
             continue
 
     if conn is None:
-        print(f"==> [DB Init] ERROR: No se pudo conectar a PostgreSQL ({db_host}:{db_port}) para crear la base '{db_name}'. Verifique DB_USER y DB_PASSWORD.")
-        sys.exit(1)
+        print(f"==> [DB Init] AVISO: No se pudo conectar a PostgreSQL para crear '{db_name}'. Usando SQLite de respaldo.")
+        return
 
     try:
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -109,6 +116,8 @@ def ensure_database():
             print(f"==> [DB Init] La base de datos '{db_name}' ya existe.")
 
         cursor.close()
+    except Exception as e:
+        print(f"==> [DB Init] Error al crear base de datos '{db_name}': {e}")
     finally:
         conn.close()
 
