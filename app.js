@@ -1053,24 +1053,22 @@
       const toggleBtn = document.createElement('button');
       toggleBtn.className = `card-collapse-toggle ${isCollapsed ? 'is-collapsed' : 'is-expanded'}`;
 
-      let label = `${children.length} sub-áreas`;
+      const childNames = children.map(c => {
+        let n = (c.nombre || '').trim();
+        n = n.replace(/\s*\(Línea 102\)/i, '');
+        return n;
+      }).filter(Boolean).join(' / ');
+
+      let label = children.length === 1
+        ? `1 Área (${childNames})`
+        : `${children.length} Áreas (${childNames})`;
+
       if (sector.id === 'sec-snaf') label = `${children.length} Áreas Principales`;
-      else if (sector.id === 'coord-opd') label = '2 Áreas (Oficinas OPD y Despacho)';
-      else if (sector.id === 'oficinas-opd') label = '30 Oficinas de Protección de Derechos (OPD)';
-      else if (sector.id === 'linea-102') label = '3 Sectores (Técnico / Operadores / Admin)';
-      else if (sector.id === 'dir-ninez') label = `${children.length} Coordinaciones y Áreas (102/OPDs/Promoción)`;
-      else if (sector.id === 'coord-adm') label = '6 Áreas Administrativas';
-      else if (sector.id === 'dir-dispositivos') label = '5 Áreas y Coordinaciones de Cuidados';
-      else if (sector.id === 'disp-cuidado-comunitario') label = '10 Dependencias (SEDE + 7 CDIs / 2 CDDs)';
-      else if (sector.id === 'sist-cuidados-alternativos') label = '2 Modalidades (Familiar / Residencial)';
-      else if (sector.id === 'cuidados-modalidad-familiar') label = '2 Programas Familiares';
-      else if (sector.id === 'cuidados-modalidad-residencial') label = '2 Residencias (Casa Niño / Casa Adolescente)';
-      else if (sector.id === 'sistema-penal-juvenil') label = '2 Modalidades (No Privativas / Privativas)';
-      else if (sector.id === 'penal-no-privativas' || sector.id === 'penal-modalidad-territorio') label = '2 Dispositivos (DAPPA / MPT)';
-      else if (sector.id === 'penal-privativas' || sector.id === 'penal-modalidad-alojamiento') label = 'Centro de Admisión y Derivación (C.A.D.)';
-      else if (sector.id === 'cad') label = '2 Centros Socio Educativos (San Pedro / Alto Comedero)';
-      else if (sector.id === 'despacho-general') label = '3 Áreas (Despacho / Mesa de Entrada / Secretaría Privada)';
-      else if (children.length === 1) label = '1 sub-área';
+      else if (sector.id === 'oficinas-opd') label = `${children.length} Oficinas de Protección de Derechos (OPD)`;
+      else if (sector.id === 'disp-cuidado-comunitario' && children.length > 4) label = `${children.length} Dependencias (SEDE + CDIs / CDDs)`;
+      else if (sector.id === 'coord-adm' && children.length > 4) label = `${children.length} Áreas Administrativas`;
+      else if (sector.id === 'dir-ninez' && children.length > 4) label = `${children.length} Coordinaciones y Áreas`;
+      else if (sector.id === 'dir-dispositivos' && children.length > 4) label = `${children.length} Áreas y Coordinaciones de Cuidados`;
 
       if (isCollapsed) {
         toggleBtn.innerHTML = `
