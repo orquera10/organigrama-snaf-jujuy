@@ -6,12 +6,12 @@ services:
     container_name: snaf_organigrama
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8031:8000"
     environment:
       - SECRET_KEY=snaf-super-secret-key-coolify-production-change-me
       - DEBUG=False
       - ALLOWED_HOSTS=*,organigrama.secnaf.jujuy.gob.ar,45.186.124.153
-      - CSRF_TRUSTED_ORIGINS=https://organigrama.secnaf.jujuy.gob.ar http://organigrama.secnaf.jujuy.gob.ar http://45.186.124.153 https://45.186.124.153
+      - CSRF_TRUSTED_ORIGINS=https://organigrama.secnaf.jujuy.gob.ar http://organigrama.secnaf.jujuy.gob.ar http://organigrama.secnaf.jujuy.gob.ar:8031 http://45.186.124.153 http://45.186.124.153:8031
       - DATA_DIR=/app/data
     volumes:
       - organigrama_data:/app/data

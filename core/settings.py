@@ -38,14 +38,20 @@ ALLOWED_HOSTS = list({h.strip() for h in allowed_hosts_str.split(',') if h.strip
     '*', 'organigrama.secnaf.jujuy.gob.ar', '45.186.124.153', 'localhost', '127.0.0.1'
 })
 
-# CSRF_TRUSTED_ORIGINS: essential for Coolify / Traefik reverse proxies (HTTPS)
+# CSRF_TRUSTED_ORIGINS: essential for Coolify / Traefik reverse proxies (HTTPS) and port 8031
 default_csrf_origins = (
     'https://organigrama.secnaf.jujuy.gob.ar '
     'http://organigrama.secnaf.jujuy.gob.ar '
+    'https://organigrama.secnaf.jujuy.gob.ar:8031 '
+    'http://organigrama.secnaf.jujuy.gob.ar:8031 '
     'http://45.186.124.153 '
     'https://45.186.124.153 '
+    'http://45.186.124.153:8031 '
+    'https://45.186.124.153:8031 '
     'http://localhost:8000 '
-    'http://127.0.0.1:8000'
+    'http://localhost:8031 '
+    'http://127.0.0.1:8000 '
+    'http://127.0.0.1:8031'
 )
 csrf_trusted_str = os.environ.get('CSRF_TRUSTED_ORIGINS', default_csrf_origins)
 CSRF_TRUSTED_ORIGINS = list({
@@ -54,8 +60,12 @@ CSRF_TRUSTED_ORIGINS = list({
 } | {
     'https://organigrama.secnaf.jujuy.gob.ar',
     'http://organigrama.secnaf.jujuy.gob.ar',
+    'https://organigrama.secnaf.jujuy.gob.ar:8031',
+    'http://organigrama.secnaf.jujuy.gob.ar:8031',
     'http://45.186.124.153',
     'https://45.186.124.153',
+    'http://45.186.124.153:8031',
+    'https://45.186.124.153:8031',
 })
 
 # Application definition
