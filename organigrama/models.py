@@ -94,4 +94,21 @@ class OrganigramaState(models.Model):
                     elif 'Sistema de Cuidados' in snom:
                         a['sector_id'] = 'sede-dpdc'
                         changed = True
+
+        sectores = data.get('sectores', [])
+        sec_map = {s.get('id'): s for s in sectores if isinstance(s, dict) and s.get('id')}
+        for s in sectores:
+            if not isinstance(s, dict):
+                continue
+            lvl = 0
+            curr = s
+            visited = set()
+            while curr and curr.get('parent_id') and curr.get('id') not in visited:
+                visited.add(curr.get('id'))
+                lvl += 1
+                curr = sec_map.get(curr.get('parent_id'))
+            if s.get('nivel') != lvl:
+                s['nivel'] = lvl
+                changed = True
+
         return changed

@@ -519,8 +519,10 @@
     const hasSubordinates = staff.length >= 1;
     const staffCountLabel = staff.length === 1 ? '1 persona' : `${staff.length} personas`;
 
-    // Determine card level: Level 3 and beyond is entirely gray
-    const cardLevel = (sector.nivel >= 3) ? 3 : (sector.nivel ?? 1);
+    // Determine card level dynamically from actual parent chain: Level 0 (root), Level 1 (yellow), Level 2 (green), Level 3+ (silver)
+    const realLevel = getDynamicSectorLevel(sector);
+    sector.nivel = realLevel;
+    const cardLevel = (realLevel >= 3) ? 3 : realLevel;
 
     // Card element
     const card = document.createElement('div');
@@ -1157,6 +1159,19 @@
 
   function getSectorById(sectorId) {
     return state.sectores.find(s => s.id === sectorId);
+  }
+
+  function getDynamicSectorLevel(sector) {
+    if (!sector || sector.id === 'sec-snaf' || !sector.parent_id) return 0;
+    let level = 0;
+    let curr = sector;
+    const visited = new Set();
+    while (curr && curr.parent_id && !visited.has(curr.id)) {
+      visited.add(curr.id);
+      level++;
+      curr = getSectorById(curr.parent_id);
+    }
+    return level;
   }
 
   function toTitleCase(str) {
