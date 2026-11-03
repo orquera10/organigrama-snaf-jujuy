@@ -1947,6 +1947,8 @@
       });
     }
 
+    setupSecRespCombobox();
+
     // Global Escape key listener to close topmost active modal or drawer
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' || e.key === 'Esc') {
@@ -2446,10 +2448,147 @@
     }
   }
 
+  function setupSecRespCombobox() {
+    const input = document.getElementById('sec-responsable');
+    const clearBtn = document.getElementById('btn-clear-sec-resp');
+    const toggleBtn = document.getElementById('btn-toggle-sec-resp');
+    const menu = document.getElementById('sec-resp-dropdown-menu');
+    const wrapper = document.getElementById('sec-resp-combobox');
+    if (!input || !menu || !wrapper) return;
+
+    input.addEventListener('focus', () => {
+      renderSecRespDropdown('');
+      menu.style.display = 'block';
+    });
+
+    input.addEventListener('click', () => {
+      if (menu.style.display === 'none') {
+        renderSecRespDropdown('');
+        menu.style.display = 'block';
+      }
+    });
+
+    input.addEventListener('input', () => {
+      updateSecRespClearBtn();
+      renderSecRespDropdown(input.value);
+      menu.style.display = 'block';
+    });
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (menu.style.display === 'block') {
+          menu.style.display = 'none';
+        } else {
+          renderSecRespDropdown('');
+          menu.style.display = 'block';
+          input.focus();
+        }
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        input.value = '';
+        updateSecRespClearBtn();
+        renderSecRespDropdown('');
+        input.focus();
+      });
+    }
+
+    menu.addEventListener('click', (e) => {
+      const item = e.target.closest('.searchable-dropdown-item');
+      if (!item) return;
+      const val = item.getAttribute('data-value') || '';
+      input.value = val;
+      updateSecRespClearBtn();
+      menu.style.display = 'none';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!wrapper.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+  }
+
+  function updateSecRespClearBtn() {
+    const input = document.getElementById('sec-responsable');
+    const clearBtn = document.getElementById('btn-clear-sec-resp');
+    if (input && clearBtn) {
+      clearBtn.style.display = input.value.trim().length > 0 ? 'flex' : 'none';
+    }
+  }
+
+  function renderSecRespDropdown(query = '') {
+    const menu = document.getElementById('sec-resp-dropdown-menu');
+    if (!menu) return;
+
+    const currentSecId = document.getElementById('sec-id')?.value || '';
+    const q = normText(query);
+
+    let list = [...(state.personal || [])];
+    list.sort((a, b) => {
+      const aInSec = currentSecId && (a.sectores || []).some(s => s.sector_id === currentSecId);
+      const bInSec = currentSecId && (b.sectores || []).some(s => s.sector_id === currentSecId);
+      if (aInSec && !bInSec) return -1;
+      if (!aInSec && bInSec) return 1;
+      const nameA = `${a.apellidos || ''} ${a.nombres || ''}`.toLowerCase();
+      const nameB = `${b.apellidos || ''} ${b.nombres || ''}`.toLowerCase();
+      return nameA.localeCompare(nameB, 'es');
+    });
+
+    if (q) {
+      list = list.filter(p => {
+        const full = normText(`${p.apellidos || ''} ${p.nombres || ''} ${p.cuil || ''} ${p.profesion || ''}`);
+        return full.includes(q);
+      });
+    }
+
+    let html = `
+      <div class="searchable-dropdown-item empty-option" data-value="">
+        <span>✖ Sin responsable asignado (dejar vacío)</span>
+      </div>
+    `;
+
+    if (list.length === 0) {
+      html += `
+        <div style="padding: 12px 10px; font-size: 12px; color: #64748b; text-align: center;">
+          No se encontró personal con "${escapeHtml(query)}". Podés dejar el texto escrito manualmente.
+        </div>
+      `;
+    } else {
+      html += list.map(p => {
+        const formattedName = formatPersonName(p);
+        const inSec = currentSecId && (p.sectores || []).some(s => s.sector_id === currentSecId);
+        const secNames = (p.sectores || []).map(s => s.sector_nombre).filter(Boolean).join(' · ');
+        const subParts = [];
+        if (p.profesion) subParts.push(p.profesion);
+        if (p.cuil) subParts.push(`CUIL ${p.cuil}`);
+        if (secNames) subParts.push(secNames);
+
+        return `
+          <div class="searchable-dropdown-item" data-value="${escapeHtml(formattedName)}">
+            <div class="dropdown-person-main">
+              <span>${escapeHtml(p.apellidos || '')}, ${escapeHtml(p.nombres || '')}</span>
+              ${inSec ? `<span class="dropdown-sector-tag">En este sector</span>` : ''}
+            </div>
+            <div class="dropdown-person-sub">${escapeHtml(subParts.join(' · ') || 'Personal SNAF')}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    menu.innerHTML = html;
+  }
+
   function openSectorModal(sectorId = null) {
     const modal = document.getElementById('modal-sector');
     const titleEl = document.getElementById('modal-sector-title');
+    const menu = document.getElementById('sec-resp-dropdown-menu');
     if (!modal) return;
+    if (menu) menu.style.display = 'none';
 
     populateSectorDropdowns();
 
@@ -2461,7 +2600,8 @@
       document.getElementById('sec-nombre').value = sector.nombre || '';
       document.getElementById('sec-tipo').value = sector.tipo || 'Área Operativa';
       document.getElementById('sec-parent').value = sector.parent_id || '';
-      document.getElementById('sec-responsable').value = sector.responsable || '';
+      const rawResp = (sector.responsable && normText(sector.responsable) !== 'a designar') ? sector.responsable : '';
+      document.getElementById('sec-responsable').value = rawResp;
       document.getElementById('sec-cargo').value = sector.cargo_responsable || '';
       document.getElementById('sec-desc').value = sector.descripcion || '';
     } else {
@@ -2475,11 +2615,14 @@
       document.getElementById('sec-desc').value = '';
     }
 
+    updateSecRespClearBtn();
     modal.classList.add('active');
   }
 
   function closeSectorModal() {
     const modal = document.getElementById('modal-sector');
+    const menu = document.getElementById('sec-resp-dropdown-menu');
+    if (menu) menu.style.display = 'none';
     if (modal) modal.classList.remove('active');
   }
 

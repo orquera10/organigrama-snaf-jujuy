@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'organigrama/vendor/phosphor/style.css' %}">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-  <link rel="stylesheet" href="{% static 'organigrama/css/styles.css' %}?v={{ version }}.2">
+  <link rel="stylesheet" href="{% static 'organigrama/css/styles.css' %}?v={{ version }}.6">
 </head>
 <body>
 
@@ -974,6 +974,7 @@
             <div class="form-group">
               <label for="sec-tipo">Tipo de Unidad</label>
               <select id="sec-tipo" class="form-control">
+                <option value="Secretaría">Secretaría</option>
                 <option value="Dirección Provincial">Dirección Provincial</option>
                 <option value="Coordinación">Coordinación</option>
                 <option value="Área Operativa">Área Operativa</option>
@@ -993,9 +994,18 @@
           </div>
 
           <div class="form-row" style="margin-top: 10px;">
-            <div class="form-group">
+            <div class="form-group" style="position: relative;">
               <label for="sec-responsable">Autoridad / Responsable</label>
-              <input type="text" id="sec-responsable" class="form-control" placeholder="Apellido y Nombre">
+              <div class="searchable-select-wrapper" id="sec-resp-combobox">
+                <input type="text" id="sec-responsable" class="form-control" autocomplete="off" placeholder="Buscar o elegir personal del sistema..." style="padding-right: 54px;">
+                <button type="button" id="btn-clear-sec-resp" class="combobox-action-btn clear-btn" title="Quitar responsable (dejar vacío)" style="display: none;">&times;</button>
+                <button type="button" id="btn-toggle-sec-resp" class="combobox-action-btn caret-btn" title="Desplegar personal cargado">
+                  <i class="ph ph-caret-down"></i>
+                </button>
+                <div class="searchable-dropdown-menu" id="sec-resp-dropdown-menu" style="display: none;">
+                  <!-- Opciones generadas dinámicamente -->
+                </div>
+              </div>
             </div>
             <div class="form-group">
               <label for="sec-cargo">Cargo de la Autoridad</label>
@@ -1034,7 +1044,7 @@
   </script>
 
   <!-- Scripts: Datos iniciales y Lógica de la aplicación -->
-  <script src="{% static 'organigrama/js/initialData.js' %}?v={{ version }}.5"></script>
-  <script src="{% static 'organigrama/js/app.js' %}?v={{ version }}.5"></script>
+  <script src="{% static 'organigrama/js/initialData.js' %}?v={{ version }}.6"></script>
+  <script src="{% static 'organigrama/js/app.js' %}?v={{ version }}.6"></script>
 </body>
 </html>
