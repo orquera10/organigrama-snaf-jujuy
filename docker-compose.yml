@@ -1,0 +1,27 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: snaf_organigrama
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=snaf-super-secret-key-coolify-production-change-me
+      - DEBUG=False
+      - ALLOWED_HOSTS=*
+      - CSRF_TRUSTED_ORIGINS=http://* https://*
+      - DATA_DIR=/app/data
+    volumes:
+      - organigrama_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  organigrama_data:
+    name: snaf_organigrama_data

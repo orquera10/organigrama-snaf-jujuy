@@ -1,0 +1,13 @@
+<USER_REQUEST>
+en base a esos listados y al organigrama, armame un organigrama web que pueda ser actualizado, mediante una seccion donde se pueda ver el personal y actualizar sus datos y sectores, tene en cuenta q un personal puede desempeñar funciones en mas de un sector
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-22T08:35:03-03:00.
+
+The user has uploaded 1 image(s):
+- C:/Users/darorquera/.gemini/antigravity/brain/d0e234f7-a2c0-4d3c-a0d5-7937cf70357e/.user_uploaded/media_1792668808982_a82ef0ae.png
+You can embed this image in an artifact if you need the USER to review it.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Gemini 3.8 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organigrama & Dotación de Personal · SNAF Jujuy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="vendor/phosphor/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="styles.css?v=18">
+</head>
+<body>
+
+  <!-- ========================================================================
+       HEADER INSTITUCIONAL
+       ======================================================================== -->
+    <!-- ========================================================================
+       HEADER INSTITUCIONAL (2 FILAS - MINIMALISTA & MODERNO)
+       ======================================================================== -->
+  <header class="app-header">
+    <!-- FILA 1: Identidad Institucional + Enlace a Organigrama -->
+    <div class="header-top-row">
+      <div class="brand-section">
+        <a href="index.html" class="brand-logo-link" title="Secretaría de Niñez, Adolescencia y Familia · Gobierno de Jujuy">
+          <img src="logo_snaf_jujuy.png" alt="Secretaría de Niñez, Adolescencia y Familia · Ministerio de Desarrollo Humano · Gobierno de Jujuy" class="app-header-logo">
+        </a>
+        <div class="brand-divider-vertical"></div>
+        <div class="brand-app-title">
+          <span class="brand-title-badge admin">Panel de Gestión</span>
+          <span class="brand-title-sub">Organigrama & Dotación Oficial</span>
+        </div>
+      </div>
+
+      <div class="header-top-right">
+        <a href="visor.html" target="_blank" class="btn btn-secondary btn-sm" title="Abrir Organigrama en Modo Consulta">
+          <i class="ph ph-arrow-square-out" style="font-size: 14px;"></i>
+          <span>Vista Organigrama</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- FILA 2: Acciones Principales + Métricas Clave (KPIs) -->
+    <div class="header-bottom-row">
+      <!-- Acciones de Gestión -->
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-header-new-person">
+          <i class="ph ph-user-plus" style="font-size: 15px;"></i>
+          <span>Nuevo Personal</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-header-new-sector">
+          <i class="ph ph-plus" style="font-size: 15px;"></i>
+          <span>Nuevo Sector</span>
+        </button>
+        <div style="position: relative;">
+          <button class="btn btn-secondary" id="btn-db-menu-toggle" title="Opciones de Base de Datos y Exportación">
+            <i class="ph ph-database" style="font-size: 15px;"></i>
+            <span>Datos</span>
+            <i class="ph ph-caret-down" style="font-size: 12px;"></i>
+          </button>
+          <div id="db-dropdown-menu" style="display:none; position: absolute; left: 0; top: 110%; background: white; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; width: 260px; z-index: 60; overflow: hidden; padding: 6px;">
+            <a href="visor.html" target="_blank" class="dropdown-item" style="text-decoration: none; width: 100%; text-align: left; padding: 8px 12px; font-size: 12.5px; border: none; background: #f0fdf4; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 8px; color: #166534; font-weight: 600; margin-bottom: 4px;">
+              <i class="ph ph-eye" style="font-size: 15px; color: #166534;"></i>
+              Abrir Vista Pública (Solo Lectura)
+            </a>
+            <button class="dropdown-item" id="btn-copy-public-link" style="width: 100%; text-align: left; padding: 8px 12px; font-size: 12.5px; border: none; background: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 8px; color: #0f766e; font-weight: 500;">
+              <i class="ph ph-link" style="font-size: 15px; color: #0f766e;"></i>
+              Copiar Enlace Público
+            </button>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 4px 0;">
+            <button class="dropdown-item" id="btn-export-json" style="width: 100%; text-align: left; padding: 8px 12px; font-size: 12.5px; border: none; background: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 8px; color: #1e293b;">
+              <i class="ph ph-download-simple" style="font-size: 15px; color: #3b82f6;"></i>
+              Descargar Backup (JSON)
+            </button>
+            <button class="dropdown-item" id="btn-export-csv" style="width: 100%; text-align: left; padding: 8px 12px; font-size: 12.5px; border: none; background: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 8px; color: #10b981;">
+              <i class="ph ph-file-csv" style="font-size: 15px; color: #10b981;"></i>
+              Exportar Personal a CSV
+            </button>
+            <label class="dropdown-item" style="width: 100%; text-align: left; padding: 8px 12px; font-size: 12.5px; border: none; background: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 8px; color: #1e293b; margin: 0;">
+              <i class="ph ph-upload-simple" style="font-size: 15px; color: #8b5cf6;"></i>
+              Cargar Backup (JSON)
+              <input type="file" id="file-import-json" accept=".json" style="display: none;">
+            </label>
+            <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 4px 0;">
+            <button class="dropdown-item" id="btn-reset-db" style="width: 100%; text-align: left; padding: 8px 12px; font-size: 12.5px; border: none; background: transparent; cursor: pointer; border-radius: 6px; display: flex; align-items: center; gap: 8px; color: #e11d48;">
+              <i class="ph ph-arrow-counter-clockwise" style="font-size: 15px; color: #e11d48;"></i>
+              Restablecer Datos
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Header Live Metrics -->
+      <div class="header-kpis">
+        <div class="kpi-pill primary" title="Total de agentes registrados">
+          <i class="ph ph-users"></i>
+          <div>
+            <strong id="kpi-total-personal">0</strong>
+            <span class="kpi-label"> Agentes</span>
+          </div>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-pill emerald" title="Total de sectores, programas y dependencias">
+          <i class="ph ph-tree-structure"></i>
+          <div>
+            <strong id="kpi-total-sectores">0</strong>
+            <span class="kpi-label"> Sectores</span>
+          </div>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-pill amber" title="Personal que cumple funciones en 2 o más sectores">
+          <i class="ph ph-star"></i>
+          <div>
+            <strong id="kpi-multi-sector">0</strong>
+            <span class="kpi-label"> Multi-Sector</span>
+          </div>
+        </div>
+        <div class="kpi-divider"></div>
+        <div class="kpi-pill purple" title="Capacitación GDE Completada">
+          <i class="ph ph-certificate"></i>
+          <div>
+            <strong id="kpi-gde-cap">0%</strong>
+            <span class="kpi-label"> GDE Cap.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       BARRA DE PESTAÑAS (TABS - MINIMALISTA)
+       ======================================================================== -->
+  <nav class="app-nav">
+    <div class="nav-inner">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-tab="organigrama">
+          <i class="ph ph-tree-structure" style="font-size: 16px;"></i>
+          <span>Organigrama</span>
+        </button>
+        <button class="nav-tab" data-tab="opds">
+          <i class="ph ph-map-pin" style="font-size: 16px;"></i>
+          <span>Red OPDs</span>
+          <span class="tab-badge">30</span>
+        </button>
+        <button class="nav-tab" data-tab="personal">
+          <i class="ph ph-users" style="font-size: 16px;"></i>
+          <span>Personal</span>
+          <span class="tab-badge" id="nav-count-personal">0</span>
+        </button>
+        <button class="nav-tab" data-tab="sectores">
+          <i class="ph ph-buildings" style="font-size: 16px;"></i>
+          <span>Sectores</span>
+          <span class="tab-badge" id="nav-count-sectores">0</span>
+        </button>
+        <button class="nav-tab" data-tab="dashboard">
+          <i class="ph ph-chart-bar" style="font-size: 16px;"></i>
+          <span>Tablero</span>
+        </button>
+      </div>
+
+      <div class="nav-actions">
+        <div class="save-status-pill saved" id="auto-save-pill">
+          <span class="status-dot"></span>
+          <span>Sincronizado</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================================
+       CONTENIDO PRINCIPAL
+       ======================================================================== -->
+  <main class="main-content">
+
+    <!-- ====================================================================
+         TAB 1: ORGANIGRAMA INTERACTIVO
+         ==================================================================== -->
+    <section class="tab-panel active" id="panel-organigrama">
+      <div class="organigram-container">
+        
+        <!-- Toolbar Organigrama -->
+        <div class="org-toolbar">
+          <div class="org-toolbar-left">
+            <div class="search-box">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" id="org-search-input" placeholder="Buscar agente, cargo o sector en el árbol...">
+            </div>
+
+            <select class="select-filter" id="org-filter-reparticion">
+              <option value="all">Ver: Toda la Secretaría (Completo)</option>
+              <option value="conduccion">Solo Conducción Central y Áreas Directas</option>
+              <option value="coord-adm">Coordinación de Gestión Administrativa</option>
+              <option value="dir-ninez">Dirección de Niñez, Adol. y Fam. (102 / OPDs / Promoción)</option>
+              <option value="dir-dispositivos">Dirección Provincial de Dispositivos de Cuidados</option>
+            </select>
+
+            <button class="btn btn-outline btn-sm" id="btn-toggle-multi-highlight" title="Resaltar sectores con personal en múltiples funciones">
+              <span>⭐</span> Resaltar Multi-Sector
+            </button>
+          </div>
+
+          <div class="org-toolbar-right">
+            <button class="btn btn-outline btn-sm" id="btn-fit-screen" title="Ajustar y centrar el organigrama a la pantalla">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              Ajustar a Pantalla
+            </button>
+            <button class="btn btn-outline btn-sm" id="btn-expand-all" title="Expandir todas las ramas y sub-sectores">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 11 12 6 17 11"/><polyline points="7 18 12 13 17 18"/></svg>
+              Expandir Todo
+            </button>
+            <button class="btn btn-outline btn-sm" id="btn-collapse-all" title="Colapsar a nivel de Áreas Principales">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 13 12 18 17 13"/><polyline points="7 6 12 11 17 6"/></svg>
+              Colapsar a Áreas Principales
+            </button>
+            <button class="btn btn-outline btn-sm" id="btn-print-org" title="Imprimir o Exportar PDF">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              Imprimir
+            </button>
+          </div>
+        </div>
+
+        <!-- Canvas Viewport con Pan y Zoom -->
+        <div class="org-viewport" id="org-viewport">
+          
+          <!-- Leyenda flotante -->
+          <div class="canvas-legend">
+            <div class="legend-item"><div class="legend-color" style="background: #4f46e5;"></div> Secretaría</div>
+            <div class="legend-item"><div class="legend-color" style="background: #0284c7;"></div> Direcciones / Coord.</div>
+            <div class="legend-item"><div class="legend-color" style="background: #059669;"></div> Áreas Operativas / Contables</div>
+            <div class="legend-item"><div class="legend-color" style="background: #7c3aed;"></div> Dispositivos / Programas</div>
+            <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> ⭐ Multi-Sector</div>
+          </div>
+
+          <!-- Botones de Zoom flotantes -->
+          <div class="canvas-floating-controls">
+            <button class="control-btn" id="btn-zoom-in" title="Acercar (+)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="11" x2="11" y1="8" y2="14"/><line x1="8" x2="14" y1="11" y2="11"/></svg>
+            </button>
+            <button class="control-btn" id="btn-zoom-out" title="Alejar (-)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="8" x2="14" y1="11" y2="11"/></svg>
+            </button>
+            <button class="control-btn" id="btn-fit-floating" title="Ajustar y centrar a la pantalla">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+            <button class="control-btn" id="btn-zoom-reset" title="Restablecer vista (100%)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+          </div>
+
+          <!-- Lienzo donde se renderiza el árbol jerárquico -->
+          <div class="org-canvas" id="org-canvas">
+            <!-- Inyectado dinámicamente por app.js -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 2: RED TERRITORIAL DE 30 OPDS
+         ==================================================================== -->
+    <section class="tab-panel" id="panel-opds">
+      <div class="opd-section">
+        
+        <div class="opd-header-card">
+          <div class="opd-header-info">
+            <h2>Red Provincial de Oficinas de Protección de Derechos (OPD)</h2>
+            <p>
+              Descentralización operativa en las 4 regiones de Jujuy: Puna, Quebrada, Valles y Ramal/Yungas.
+              Cada oficina cuenta con equipo interdisciplinario, cobertura legal y atención a vulneraciones de derechos.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <div style="text-align: right; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 10px;">
+              <div style="font-size: 22px; font-weight: 800;">30</div>
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">Oficinas Activas</div>
+            </div>
+            <div style="text-align: right; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 10px;">
+              <div style="font-size: 22px; font-weight: 800;" id="opd-lawyer-count">16</div>
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">Abogados (Tit./Itin.)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="opd-filters-bar">
+          <div class="region-pills" id="opd-region-filters">
+            <button class="region-pill active" data-region="all">Todas (30)</button>
+            <button class="region-pill" data-region="Valles (Capital)">Valles & Capital (6)</button>
+            <button class="region-pill" data-region="Valles">Valles Interior (7)</button>
+            <button class="region-pill" data-region="Ramal / Yungas">Ramal / Yungas (10)</button>
+            <button class="region-pill" data-region="Quebrada">Quebrada (4)</button>
+            <button class="region-pill" data-region="Puna">Puna (3)</button>
+          </div>
+
+          <div class="search-box" style="max-width: 300px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" id="opd-search-input" placeholder="Buscar por localidad, abogado o equipo...">
+          </div>
+        </div>
+
+        <!-- Grid de Tarjetas de las 30 OPDs -->
+        <div class="opd-grid" id="opd-cards-container">
+          <!-- Inyectado por app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 3: GESTIÓN DE PERSONAL & SECTORES (CORE REQUIREMENT)
+         ==================================================================== -->
+    <section class="tab-panel" id="panel-personal">
+      <div class="personnel-section">
+        
+        <!-- Barra de herramientas & filtros de personal -->
+        <div class="personnel-toolbar">
+          <div class="toolbar-row-top">
+            <div class="search-box" style="max-width: 440px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" id="personnel-search-input" placeholder="Buscar por Apellido, Nombre, CUIL, Usuario GDE, Rol...">
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button class="btn btn-primary" id="btn-create-person-toolbar">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+                Agregar Personal
+              </button>
+
+              <div class="view-toggle">
+                <button class="view-btn active" id="btn-view-table" title="Vista Tabla">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                </button>
+                <button class="view-btn" id="btn-view-cards" title="Vista Tarjetas">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filtros de búsqueda rápida -->
+          <div class="toolbar-filters">
+            <span style="font-size: 12px; font-weight: 700; color: var(--slate-500); text-transform: uppercase;">Filtros:</span>
+            
+            <button class="filter-chip-btn active" data-filter="all">Todos</button>
+            
+            <!-- Botón de filtro destacado multi-sector -->
+            <button class="filter-chip-btn multi-sector" id="btn-filter-multisector" data-filter="multisector" title="Mostrar agentes que cumplen funciones en 2 o más sectores">
+              <span>⭐</span> Multi-Sector (<span id="filter-multi-count">0</span>)
+            </button>
+
+            <select class="select-filter" id="filter-sector-dropdown" style="max-width: 260px;">
+              <option value="all">Filtrar por Sector (Todos)</option>
+              <!-- Rellenado dinámicamente -->
+            </select>
+
+            <select class="select-filter" id="filter-gde-status">
+              <option value="all">Capacitación GDE (Todos)</option>
+              <option value="si-completo">GDE: SI (Virtual + Presencial)</option>
+              <option value="si-virtual">GDE: Aula Virtual (Pendiente Presencial)</option>
+              <option value="si-presencial">GDE: Presencial</option>
+              <option value="no">GDE: NO</option>
+            </select>
+
+            <select class="select-filter" id="filter-profesion">
+              <option value="all">Profesión / Función (Todas)</option>
+              <option value="tecnico">Personal Técnico / Informática</option>
+              <option value="abogado">Abogados / Asesores Legales</option>
+              <option value="trabajo-social">Trabajo Social</option>
+              <option value="psicologia">Psicología</option>
+              <option value="administrativo">Administrativos</option>
+              <option value="operador">Operadores</option>
+              <option value="responsable">Responsables / Jerárquicos</option>
+            </select>
+
+            <span style="margin-left: auto; font-size: 12px; color: var(--slate-500); font-weight: 600;" id="lbl-result-count">
+              Mostrando 0 agentes
+            </span>
+          </div>
+        </div>
+
+        <!-- Vista Tabla -->
+        <div class="table-card" id="personnel-table-wrapper">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Agente</th>
+                  <th>CUIL / Contacto</th>
+                  <th>Profesión / Título</th>
+                  <th>Sectores y Funciones Asignadas (Multi-Sector)</th>
+                  <th>GDE / Capacitación</th>
+                  <th style="text-align: right;">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="personnel-tbody">
+                <!-- Inyectado por app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Paginación -->
+          <div class="pagination-bar">
+            <div>
+              Mostrando <span id="pag-start">1</span> - <span id="pag-end">20</span> de <span id="pag-total">0</span> agentes
+            </div>
+            <div class="pagination-controls">
+              <button class="btn btn-outline btn-sm" id="btn-pag-prev" disabled>◀ Anterior</button>
+              <span style="font-weight: 600; padding: 0 8px;" id="lbl-page-current">Pág 1 de 1</span>
+              <button class="btn btn-outline btn-sm" id="btn-pag-next">Siguiente ▶</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vista Tarjetas -->
+        <div class="personnel-grid" id="personnel-grid-wrapper" style="display: none;">
+          <!-- Inyectado por app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 4: ESTRUCTURA DE SECTORES
+         ==================================================================== -->
+    <section class="tab-panel" id="panel-sectores">
+      <div class="sectors-section">
+        
+        <div class="personnel-toolbar">
+          <div class="toolbar-row-top">
+            <div class="search-box" style="max-width: 440px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" id="sectors-search-input" placeholder="Buscar sector, autoridad o tipo...">
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+              <select class="select-filter" id="filter-sector-type">
+                <option value="all">Tipo: Todos</option>
+                <option value="Secretaría">Secretaría Central</option>
+                <option value="Dirección Provincial">Direcciones Provinciales</option>
+                <option value="Coordinación">Coordinaciones</option>
+                <option value="Oficina de Protección de Derechos">OPDs (30)</option>
+                <option value="Centro de Desarrollo Infantil">CDIs / Centros de Día</option>
+                <option value="Dispositivo">Dispositivos Penales / Residencias</option>
+                <option value="Programa">Programas de Cuidado / Acompañamiento</option>
+              </select>
+
+              <button class="btn btn-primary" id="btn-create-sector-view">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                Crear Nuevo Sector
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Sector / Dependencia</th>
+                  <th>Nivel / Tipo</th>
+                  <th>Depende de</th>
+                  <th>Autoridad / Responsable</th>
+                  <th>Dotación Personal</th>
+                  <th style="text-align: right;">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="sectors-tbody">
+                <!-- Inyectado por app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         TAB 5: TABLERO & ESTADÍSTICAS
+         ==================================================================== -->
+    <section class="tab-panel" id="panel-dashboard">
+      <div class="dashboard-section">
+        
+        <!-- Top Metrics Cards -->
+        <div class="stats-grid-top">
+          <div class="stat-metric-card">
+            <div class="metric-info">
+              <h4>Dotación Total Activa</h4>
+              <div class="metric-num" id="dash-total-agents">0</div>
+              <p>Agentes unificados en nómina</p>
+            </div>
+            <div class="metric-icon-box blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+          </div>
+
+          <div class="stat-metric-card">
+            <div class="metric-info">
+              <h4>Sectores & Dispositivos</h4>
+              <div class="metric-num" id="dash-total-sectors">0</div>
+              <p>Unidades operativas y sedes</p>
+            </div>
+            <div class="metric-icon-box emerald">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+          </div>
+
+          <div class="stat-metric-card">
+            <div class="metric-info">
+              <h4>Agentes Multi-Sector</h4>
+              <div class="metric-num" id="dash-multi-sector">0</div>
+              <p>Itinerancias BIS y cruces</p>
+            </div>
+            <div class="metric-icon-box amber">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            </div>
+          </div>
+
+          <div class="stat-metric-card">
+            <div class="metric-info">
+              <h4>Capacitación GDE</h4>
+              <div class="metric-num" id="dash-gde-pct">0%</div>
+              <p>Conforme con aula virtual/presencial</p>
+            </div>
+            <div class="metric-icon-box purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Breakdown Rows -->
+        <div class="charts-row">
+          <div class="chart-card">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+              Distribución por Repartición / Dirección
+            </h3>
+            <div class="progress-list" id="dash-dist-reparticiones">
+              <!-- Inyectado por app.js -->
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Cumplimiento de Capacitación GDE
+            </h3>
+            <div class="progress-list" id="dash-dist-gde">
+              <!-- Inyectado por app.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-Sector Special List Card -->
+        <div class="chart-card">
+          <h3 style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="display: flex; align-items: center; gap: 8px;">
+              <span style="color: #f59e0b;">⭐</span>
+              Nómina de Personal con Funciones en Múltiples Sectores (Itinerancias / Cruces)
+            </span>
+            <span style="font-size: 12px; color: var(--slate-500); font-weight: normal;">
+              Detecta automáticamente dobles designaciones, coberturas itinerantes BIS y funciones compartidas
+            </span>
+          </h3>
+          <div class="table-responsive" style="margin-top: 14px;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Agente</th>
+                  <th>CUIL</th>
+                  <th>Profesión</th>
+                  <th>Sectores donde Desempeña Funciones</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="dash-multisector-tbody">
+                <!-- Inyectado por app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       MODAL: EDITAR / CREAR PERSONAL (MULTI-SECTOR)
+       ======================================================================== -->
+  <div class="modal-overlay" id="modal-personnel">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-person-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+          Editar Personal y Sectores
+        </h3>
+        <button class="modal-close-btn" id="btn-close-modal-person">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="form-personnel" onsubmit="return false;">
+          <input type="hidden" id="p-id">
+
+          <!-- Sección 1: Datos Personales y Profesionales -->
+          <div class="form-section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            1. Datos Personales & Profesionales
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-apellidos">Apellidos *</label>
+              <input type="text" id="p-apellidos" class="form-control" required placeholder="Ej: PÉREZ">
+            </div>
+            <div class="form-group">
+              <label for="p-nombres">Nombres *</label>
+              <input type="text" id="p-nombres" class="form-control" required placeholder="Ej: JUAN CARLOS">
+            </div>
+            <div class="form-group">
+              <label for="p-cuil">CUIL (11 dígitos)</label>
+              <input type="text" id="p-cuil" class="form-control" placeholder="Ej: 20334827322" maxlength="11">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-group">
+              <label for="p-profesion">Profesión / Especialidad</label>
+              <input type="text" id="p-profesion" class="form-control" placeholder="Ej: Abogado / Lic. en Trabajo Social">
+            </div>
+            <div class="form-group">
+              <label for="p-matricula">Matrícula (M.P.)</label>
+              <input type="text" id="p-matricula" class="form-control" placeholder="Ej: MP 4283">
+            </div>
+            <div class="form-group">
+              <label for="p-sit-revista">Situación de Revista</label>
+              <select id="p-sit-revista" class="form-control">
+                <option value="Planta Permanente">Planta Permanente</option>
+                <option value="Planta Transitoria">Planta Transitoria</option>
+                <option value="CLS">CLS (Contrato de Locación de Servicios)</option>
+                <option value="PPP">PPP (Pasantía / Programa)</option>
+                <option value="Municipal">Municipal (Dependencia Local)</option>
+                <option value="Otro">Otro / En Trámite</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-group">
+              <label for="p-correo">Correo Electrónico</label>
+              <input type="email" id="p-correo" class="form-control" placeholder="correo@ejemplo.com">
+            </div>
+            <div class="form-group">
+              <label for="p-telefono">Teléfono / Celular</label>
+              <input type="text" id="p-telefono" class="form-control" placeholder="Ej: 3885197575">
+            </div>
+            <div class="form-group">
+              <label for="p-horario">Horario Habitual</label>
+              <input type="text" id="p-horario" class="form-control" placeholder="Ej: Lunes a Viernes 7:00 a 13:00">
+            </div>
+          </div>
+
+          <!-- Sección 2: GDE & Capacitación -->
+          <div class="form-section-title" style="margin-top: 20px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/></svg>
+            2. Sistema GDE & Capacitación
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="p-gde-user">Usuario GDE</label>
+              <input type="text" id="p-gde-user" class="form-control" placeholder="Ej: DJORQUERA">
+            </div>
+            <div class="form-group" style="display: flex; flex-direction: row; gap: 20px; align-items: center; margin-top: 22px;">
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox" id="p-caratulador"> Caratulador
+              </label>
+              <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox" id="p-asignador"> Asignador
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="p-gde-cap">Capacitación GDE</label>
+              <select id="p-gde-cap" class="form-control">
+                <option value="SI">SI (Aprobado)</option>
+                <option value="NO">NO</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-group">
+              <label for="p-gde-mod">Modalidad</label>
+              <input type="text" id="p-gde-mod" class="form-control" placeholder="Ej: Aula Virtual + Presencial">
+            </div>
+            <div class="form-group">
+              <label for="p-gde-calif">Calificaciones Aula Virtual</label>
+              <input type="text" id="p-gde-calif" class="form-control" placeholder="Ej: CCOO: 10 | GEDO: 10 | EE: 9.6">
+            </div>
+            <div class="form-group">
+              <label for="p-gde-asist">Asistencia Presencial</label>
+              <input type="text" id="p-gde-asist" class="form-control" placeholder="Ej: 2 encuentros (06/04/2026)">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 10px;">
+            <label for="p-obs">Observaciones Generales</label>
+            <input type="text" id="p-obs" class="form-control" placeholder="Notas administrativas, resoluciones, referencias...">
+          </div>
+
+          <!-- Sección 3: SECTORES Y FUNCIONES (MULTI-SECTOR) -->
+          <div class="form-section-title" style="margin-top: 24px; color: #b45309;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+            3. Sectores y Funciones Asignadas (Multi-Sector)
+          </div>
+
+          <div class="multi-sector-editor-box">
+            <div class="multi-sector-banner">
+              <strong>⭐ Asignación Multi-Sector:</strong> Un agente puede desempeñar funciones en más de un sector simultáneamente (por ejemplo: base titular en una oficina e itinerancia BIS en otra, o funciones compartidas entre áreas).
+            </div>
+
+            <!-- Contenedor dinámico de sectores -->
+            <div id="dynamic-sectors-list" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Filas de sectores inyectadas dinámicamente -->
+            </div>
+
+            <button type="button" class="btn btn-outline" id="btn-add-sector-row" style="align-self: flex-start; margin-top: 4px;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              ➕ Asignar a otro Sector / Función
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btn-cancel-modal-person">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-person">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: VER DATOS / FICHA DEL PERSONAL (LECTURA)
+       ======================================================================== -->
+  <div class="modal-overlay" id="modal-view-person">
+    <div class="modal-dialog" style="max-width: 840px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border-bottom: none;">
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <div class="person-avatar" id="vp-avatar" style="width: 48px; height: 48px; font-size: 18px; background: #2563eb; color: white; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+            AG
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <h3 id="vp-nombre-completo" style="color: white; font-size: 18px; margin: 0; font-weight: 800;">
+                APELLIDOS, Nombres
+              </h3>
+              <span id="vp-multi-badge" style="display:none; background: #f59e0b; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px;">⭐ Multi-Sector</span>
+            </div>
+            <div style="font-size: 13px; color: #94a3b8; margin-top: 3px;">
+              <span id="vp-profesion-header">Profesión</span> · CUIL: <strong id="vp-cuil-header" style="color: #e2e8f0;">-</strong>
+            </div>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="btn-close-modal-view-person" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25);" title="Cerrar ficha (o clic afuera / Esc)">
+          &times;
+        </button>
+      </div>
+
+      <div class="modal-body" style="background: #f8fafc; padding: 20px 24px;">
+        
+        <!-- Ficha Section 1: Contacto y Situación de Revista -->
+        <div class="view-card-section">
+          <div class="view-section-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Información Personal y Profesional</span>
+          </div>
+          <div class="view-grid-3">
+            <div class="view-field">
+              <label>CUIL</label>
+              <div id="vp-cuil" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Profesión / Especialidad</label>
+              <div id="vp-profesion" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Matrícula (M.P.)</label>
+              <div id="vp-matricula" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Situación de Revista</label>
+              <div id="vp-sit-revista" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Correo Electrónico</label>
+              <div id="vp-correo" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Teléfono / Celular</label>
+              <div id="vp-telefono" class="view-value">-</div>
+            </div>
+            <div class="view-field" style="grid-column: span 3;">
+              <label>Horario Habitual</label>
+              <div id="vp-horario" class="view-value">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ficha Section 2: GDE & Capacitaciones -->
+        <div class="view-card-section">
+          <div class="view-section-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span>Sistema GDE y Capacitaciones</span>
+          </div>
+          <div class="view-grid-3">
+            <div class="view-field">
+              <label>Usuario GDE</label>
+              <div id="vp-gde-user" class="view-value font-mono">-</div>
+            </div>
+            <div class="view-field">
+              <label>Permisos GDE</label>
+              <div id="vp-gde-permisos" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Capacitación GDE</label>
+              <div id="vp-gde-cap" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Modalidad de Cursado</label>
+              <div id="vp-gde-mod" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Calificaciones Aula Virtual</label>
+              <div id="vp-gde-calif" class="view-value">-</div>
+            </div>
+            <div class="view-field">
+              <label>Asistencia Presencial</label>
+              <div id="vp-gde-asist" class="view-value">-</div>
+            </div>
+            <div class="view-field" style="grid-column: span 3;">
+              <label>Observaciones Generales</label>
+              <div id="vp-obs" class="view-value">-</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ficha Section 3: Sectores Asignados (Multi-Sector) -->
+        <div class="view-card-section">
+          <div class="view-section-header" style="justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+              <span>Sectores y Funciones Asignadas</span>
+            </div>
+            <span id="vp-sectors-count-badge" class="badge-blue">1 Sector</span>
+          </div>
+          <div id="vp-sectors-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+            <!-- Rellenado dinámicamente -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" style="background: white; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn btn-outline" id="btn-close-modal-view-person-footer">Cerrar</button>
+        <button class="btn btn-primary" id="btn-edit-from-view-modal">
+          ✏️ Editar Datos de este Agente
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       DRAWER: FICHA DEL SECTOR (SLIDE-OVER)
+       ======================================================================== -->
+  <div class="drawer-overlay" id="drawer-sector">
+    <div class="drawer-panel">
+      <div class="drawer-header">
+        <div>
+          <span class="sector-type-badge" id="drawer-sector-type">Sector</span>
+          <h2 style="font-size: 17px; font-weight: 800; color: var(--slate-900); margin-top: 4px;" id="drawer-sector-name">
+            Nombre del Sector
+          </h2>
+        </div>
+        <button class="drawer-close-btn" id="btn-close-drawer-sector" title="Cerrar panel lateral (o clic afuera / Esc)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <span>Cerrar</span>
+        </button>
+      </div>
+
+      <div class="drawer-body">
+        
+        <!-- Info del Sector -->
+        <div style="background: var(--slate-50); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px;">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <div class="authority-avatar" id="drawer-authority-avatar" style="width: 38px; height: 38px; font-size: 14px;">
+              AU
+            </div>
+            <div>
+              <div style="font-size: 13.5px; font-weight: 700;" id="drawer-authority-name">Autoridad</div>
+              <div style="font-size: 11.5px; color: var(--slate-500);" id="drawer-authority-cargo">Cargo</div>
+            </div>
+          </div>
+          <p style="font-size: 12px; color: var(--slate-600); margin-bottom: 6px;" id="drawer-sector-desc"></p>
+          <div id="drawer-opd-extra-info" style="display: none; border-top: 1px dashed var(--slate-300); padding-top: 8px; margin-top: 8px; font-size: 12px;">
+            <!-- Info extra si es OPD -->
+          </div>
+        </div>
+
+        <!-- Dotación de Personal en este Sector -->
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: var(--slate-800); display: flex; align-items: center; gap: 6px;">
+              <span>👥</span> Personal Asignado a este Sector (<span id="drawer-staff-count">0</span>)
+            </h4>
+            <button class="btn btn-outline btn-sm" id="btn-assign-person-to-current-sector">
+              ➕ Asignar Personal
+            </button>
+          </div>
+
+          <div id="drawer-staff-list" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- Lista de agentes en este sector -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL: CREAR / EDITAR SECTOR
+       ======================================================================== -->
+  <div class="modal-overlay" id="modal-sector">
+    <div class="modal-dialog" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="modal-sector-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Nuevo Sector / Área
+        </h3>
+        <button class="modal-close-btn" id="btn-close-modal-sector">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <form id="form-sector" onsubmit="return false;">
+          <input type="hidden" id="sec-id">
+
+          <div class="form-group">
+            <label for="sec-nombre">Nombre del Sector *</label>
+            <input type="text" id="sec-nombre" class="form-control" required placeholder="Ej: Departamento de Coordinación...">
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-group">
+              <label for="sec-tipo">Tipo de Unidad</label>
+              <select id="sec-tipo" class="form-control">
+                <option value="Dirección Provincial">Dirección Provincial</option>
+                <option value="Coordinación">Coordinación</option>
+                <option value="Área Operativa">Área Operativa</option>
+                <option value="Área Técnica">Área Técnica</option>
+                <option value="Oficina de Protección de Derechos">Oficina de Protección de Derechos (OPD)</option>
+                <option value="Centro de Desarrollo Infantil">Centro de Desarrollo Infantil (CDI)</option>
+                <option value="Dispositivo">Dispositivo Residencial / Penal</option>
+                <option value="Programa">Programa</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="sec-parent">Depende de (Sector Superior)</label>
+              <select id="sec-parent" class="form-control">
+                <!-- Rellenado dinámicamente -->
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-group">
+              <label for="sec-responsable">Autoridad / Responsable</label>
+              <input type="text" id="sec-responsable" class="form-control" placeholder="Apellido y Nombre">
+            </div>
+            <div class="form-group">
+              <label for="sec-cargo">Cargo de la Autoridad</label>
+              <input type="text" id="sec-cargo" class="form-control" placeholder="Ej: Coordinador / Responsable">
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 10px;">
+            <label for="sec-desc">Descripción / Misiones</label>
+            <textarea id="sec-desc" class="form-control" rows="2" placeholder="Funciones principales del sector..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btn-cancel-modal-sector">Cancelar</button>
+        <button class="btn btn-primary" id="btn-save-sector">Guardar Sector</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor para Alertas y Toasts -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts: Datos iniciales y Lógica de la aplicación -->
+  <script src="initialData.js?v=18"></script>
+  <script src="app.js?v=18"></script>
+</body>
+</html>

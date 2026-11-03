@@ -1,0 +1,363 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Seguro · Sistema Institucional SNAF Jujuy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'organigrama/vendor/phosphor/style.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <style>
+    .ph {
+      vertical-align: middle;
+      display: inline-block;
+      line-height: 1;
+    }
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--slate-50);
+      background-image: radial-gradient(var(--slate-300) 1.2px, transparent 1.2px);
+      background-size: 24px 24px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: var(--slate-800);
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border: 1px solid var(--slate-200);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.07), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--slate-100);
+      padding: 34px 28px 24px;
+      text-align: center;
+    }
+
+    .login-logo {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 16px;
+      object-fit: contain;
+    }
+
+    .login-header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .login-header p {
+      font-size: 12.5px;
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+
+    .login-body {
+      padding: 28px 28px 32px;
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.45;
+    }
+
+    .alert-error {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .alert-warning {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .alert-info {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--slate-700);
+      margin-bottom: 7px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--slate-400);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-input {
+      width: 100%;
+      height: 44px;
+      padding: 10px 14px 10px 40px;
+      border: 1px solid var(--slate-300);
+      border-radius: 10px;
+      font-size: 13.5px;
+      color: var(--slate-900);
+      background: #ffffff;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      background: var(--slate-900);
+      color: #ffffff;
+      border: 1px solid var(--slate-900);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+      margin-top: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .btn-submit:hover {
+      background: var(--slate-800);
+      border-color: var(--slate-800);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .accounts-hint {
+      margin-top: 22px;
+      padding: 12px 14px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      font-size: 11.5px;
+      color: var(--slate-600);
+    }
+
+    .accounts-hint-title {
+      font-weight: 700;
+      color: var(--slate-700);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .account-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3px 0;
+    }
+
+    .account-role-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .account-role-tag.admin {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .account-role-tag.viewer {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .login-footer {
+      background: var(--slate-50);
+      border-top: 1px solid var(--slate-100);
+      padding: 14px 24px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--slate-400);
+      line-height: 1.5;
+    }
+
+    .badge-lock {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--slate-600);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    
+    <div class="login-header">
+      <img src="{% static 'organigrama/img/logo_snaf_jujuy.png' %}" alt="Secretaría de Niñez, Adolescencia y Familia · Ministerio de Desarrollo Humano · Gobierno de Jujuy" class="login-logo">
+      <h1>Sistema Institucional</h1>
+      <p>Organigrama Oficial & Gestión de Dotación</p>
+    </div>
+
+    <div class="login-body">
+      
+      {% if error_message %}
+        <div class="alert alert-error">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <div>{{ error_message }}</div>
+        </div>
+      {% endif %}
+
+      {% if request.GET.denied %}
+        <div class="alert alert-warning">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <div><strong>Acceso restringido:</strong> Tu cuenta no posee permisos para ingresar al Panel de Gestión. Inicia sesión con una cuenta autorizada o consulta el Organigrama.</div>
+        </div>
+      {% endif %}
+
+      {% if request.GET.logged_out %}
+        <div class="alert alert-info">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <div>Has cerrado sesión correctamente.</div>
+        </div>
+      {% endif %}
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next_url|default:'' }}">
+
+        <div class="form-group">
+          <label class="form-label" for="username">Usuario Institucional</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <i class="ph ph-user" style="font-size: 17px; color: var(--slate-400);"></i>
+            </span>
+            <input type="text" id="username" name="username" class="form-input" placeholder="Ej: dorquera o miriarte" required autofocus value="{{ submitted_username|default:'' }}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <i class="ph ph-lock-key" style="font-size: 17px; color: var(--slate-400);"></i>
+            </span>
+            <input type="password" id="password" name="password" class="form-input" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span>Ingresar al Sistema</span>
+          <i class="ph ph-arrow-right" style="font-size: 16px;"></i>
+        </button>
+      </form>
+
+      <div class="accounts-hint">
+        <div class="accounts-hint-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <span>Cuentas habilitadas</span>
+        </div>
+        <div class="account-row">
+          <span>• <strong>dorquera</strong> (Dario Orquera)</span>
+          <span class="account-role-tag admin">Administrador Total</span>
+        </div>
+        <div class="account-row">
+          <span>• <strong>miriarte</strong> (Marta Iriarte)</span>
+          <span class="account-role-tag viewer">Consulta Organigrama</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="login-footer">
+      <div class="badge-lock">
+        <i class="ph ph-lock-key" style="font-size: 13px;"></i>
+        <span>Acceso Seguro y Confidencial</span>
+      </div>
+      <div>Información protegida bajo Ley Nacional N° 25.326 de Protección de Datos Personales. El acceso y las operaciones son auditados.</div>
+    </div>
+
+  </div>
+
+</body>
+</html>
