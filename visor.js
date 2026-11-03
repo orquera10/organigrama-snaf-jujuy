@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'SNAF_ORGANIGRAMA_STATE_V18';
+  const STORAGE_KEY = 'SNAF_ORGANIGRAMA_STATE_V19';
 
   // State
   let state = {
@@ -45,6 +45,7 @@
     try {
       localStorage.removeItem('SNAF_ORGANIGRAMA_STATE_V16');
       localStorage.removeItem('SNAF_ORGANIGRAMA_STATE_V17');
+      localStorage.removeItem('SNAF_ORGANIGRAMA_STATE_V18');
 
       // En el visor público siempre priorizar los datos oficiales más recientes provistos por el servidor
       if (window.SERVER_ORGANIGRAMA_DATA && window.SERVER_ORGANIGRAMA_DATA.sectores) {
@@ -110,7 +111,16 @@
     }
     if (state.personal) {
       state.personal = state.personal.map(p => {
-        p.sectores = (p.sectores || []).filter(s => s.sector_id !== 'dir-juventud' && !s.sector_nombre.toLowerCase().includes('juventud') && !s.reparticion.toLowerCase().includes('juventud'));
+        p.sectores = (p.sectores || []).filter(s => s.sector_id !== 'dir-juventud' && !s.sector_nombre.toLowerCase().includes('juventud') && !s.reparticion.toLowerCase().includes('juventud')).map(s => {
+          if (s.sector_id === 'sec-snaf') {
+            const snom = s.sector_nombre || '';
+            if (snom.includes('Guillermo Snopek')) s.sector_id = 'cdi-guillermo-snopek';
+            else if (snom.includes('Santa Cecilia')) s.sector_id = 'cdi-santa-cecilia';
+            else if (snom.includes('Eva Peron') || snom.includes('Eva Perón')) s.sector_id = 'cdi-eva-peron';
+            else if (snom.includes('Sistema de Cuidados')) s.sector_id = 'sede-dpdc';
+          }
+          return s;
+        });
         p.is_multi_sector = p.sectores.length > 1;
         return p;
       }).filter(p => p.sectores.length > 0);
@@ -502,13 +512,12 @@
       primaryPersonName = 'Dra. Marta Iriarte';
     } else if (sector.responsable) {
       primaryPersonName = formatPersonName(sector.responsable);
-    } else if (staff.length > 0) {
-      primaryPersonName = formatPersonName(staff[0]);
     } else {
       primaryPersonName = 'A designar';
     }
 
-    const hasMultipleStaff = staff.length > 1;
+    const hasSubordinates = staff.length >= 1;
+    const staffCountLabel = staff.length === 1 ? '1 persona' : `${staff.length} personas`;
 
     // Determine card level: Level 3 and beyond is entirely gray
     const cardLevel = (sector.nivel >= 3) ? 3 : (sector.nivel ?? 1);
@@ -529,7 +538,7 @@
           <div class="sector-person-name">${escapeHtml(primaryPersonName)}</div>
         </div>
 
-        ${hasMultipleStaff ? `
+        ${hasSubordinates ? `
           <div class="card-staff-expanded">
             <div class="staff-expanded-list">
               ${staff.map(p => `
@@ -542,8 +551,8 @@
           </div>
 
           <div class="card-staff-toggle-wrapper">
-            <button type="button" class="btn-toggle-staff" title="Ampliar cuadro y ver nómina completa">
-              <span class="btn-toggle-text"><i class="ph ph-users"></i> ${staff.length} personas <i class="ph ph-caret-down"></i></span>
+            <button type="button" class="btn-toggle-staff" title="Ampliar cuadro y ver usuarios dependientes">
+              <span class="btn-toggle-text"><i class="ph ph-users"></i> ${staffCountLabel} <i class="ph ph-caret-down"></i></span>
             </button>
           </div>
         ` : ''}
@@ -551,7 +560,7 @@
     `;
 
     // Toggle button to expand/collapse full staff inside the card
-    if (hasMultipleStaff) {
+    if (hasSubordinates) {
       const btnToggle = card.querySelector('.btn-toggle-staff');
       if (btnToggle) {
         btnToggle.addEventListener('click', (e) => {
@@ -562,7 +571,7 @@
             textSpan.innerHTML = `<i class="ph ph-caret-up"></i> Ocultar (${staff.length})`;
             btnToggle.classList.add('active');
           } else {
-            textSpan.innerHTML = `<i class="ph ph-users"></i> ${staff.length} personas <i class="ph ph-caret-down"></i>`;
+            textSpan.innerHTML = `<i class="ph ph-users"></i> ${staffCountLabel} <i class="ph ph-caret-down"></i>`;
             btnToggle.classList.remove('active');
           }
         });
@@ -980,12 +989,161 @@
     });
   }
 
+  function normText(s) {
+    if (!s) return '';
+    return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  }
+
+  function cleanRespName(resp) {
+    let r = normText(resp);
+    ['dra. ', 'dr. ', 'lic. ', 'ing. ', 'prof. ', 'abog. ', 'tec. '].forEach(t => {
+      r = r.split(t).join('');
+    });
+    return r.replace(/\[.*?\]|\(.*?\)/g, '').trim();
+  }
+
+  function isPlaceholderResp(resp) {
+    const r = normText(resp);
+    if (!r) return true;
+    const placeholders = [
+      'a designar', 'sin abogado', 'equipo interdisciplinario',
+      'guardia telefonica', 'equipo tecnico', 'coordinadores de casas'
+    ];
+    return placeholders.some(ph => r.includes(ph));
+  }
+
+  function personMatchesSingleResp(person, singleResp) {
+    if (!person || !singleResp || isPlaceholderResp(singleResp)) return false;
+    const r = cleanRespName(singleResp);
+    if (!r) return false;
+    const apTokens = normText(person.apellidos || '').split(/\s+/).filter(t => t.length > 2);
+    const nomTokens = normText(person.nombres || '').split(/\s+/).filter(t => t.length > 2);
+    if (apTokens.length === 0) return false;
+    const apMatch = apTokens.some(at => r.includes(at));
+    const nomMatch = nomTokens.length > 0 ? nomTokens.some(nt => r.includes(nt)) : true;
+    return apMatch && nomMatch;
+  }
+
+  function personMatchesResp(person, respStr) {
+    if (!person || !respStr || isPlaceholderResp(respStr)) return false;
+    const parts = String(respStr).split(/[\n/]+/).map(s => s.trim()).filter(Boolean);
+    return parts.some(part => personMatchesSingleResp(person, part));
+  }
+
+  function getAncestorResponsables(sector) {
+    const resps = [];
+    let curr = sector && sector.parent_id ? getSectorById(sector.parent_id) : null;
+    while (curr) {
+      if (curr.responsable && !isPlaceholderResp(curr.responsable)) {
+        resps.push(curr.responsable);
+      }
+      curr = curr.parent_id ? getSectorById(curr.parent_id) : null;
+    }
+    resps.push('Dra. Marta Laura Iriarte Duberti');
+    return resps;
+  }
+
+  function sameRespIdentity(respA, respB) {
+    const a = cleanRespName(respA);
+    const b = cleanRespName(respB);
+    if (!a || !b) return false;
+    if (a === b) return true;
+    if (a.includes('iriarte') && b.includes('iriarte')) return true;
+    if (a.includes('vacaflor') && b.includes('vacaflor')) return true;
+    if (a.includes('chara') && b.includes('chara')) return true;
+    if (a.includes('gloss') && b.includes('gloss')) return true;
+    if (a.includes('alancay') && b.includes('alancay') && a.includes('delia') && b.includes('delia')) return true;
+    if (a.includes('alancay') && b.includes('alancay') && a.includes('nancy') && b.includes('nancy')) return true;
+    return false;
+  }
+
+  function getSectorOwnEncargados(sector) {
+    if (!sector || !state.personal) return [];
+    const resp = sector.responsable || '';
+    if (isPlaceholderResp(resp)) return [];
+    const ancResps = getAncestorResponsables(sector);
+    const parts = String(resp).split(/[\n/]+/).map(s => s.trim()).filter(Boolean);
+    const encargados = [];
+    const seen = new Set();
+
+    const directPool = state.personal.filter(p => (p.sectores || []).some(a => a.sector_id === sector.id));
+
+    parts.forEach(part => {
+      if (isPlaceholderResp(part)) return;
+      if (ancResps.some(ar => sameRespIdentity(part, ar))) return;
+
+      let matched = directPool.find(p => personMatchesSingleResp(p, part));
+      if (!matched) {
+        matched = state.personal.find(p => personMatchesSingleResp(p, part));
+      }
+      if (matched && !seen.has(matched.id)) {
+        seen.add(matched.id);
+        encargados.push(matched);
+      }
+    });
+
+    return encargados;
+  }
+
+  // Returns ONLY the direct subordinate users ("usuarios hijos") of the given sector's authority/encargado
   function getPersonnelInSector(sectorId) {
-    if (!state.personal) return [];
-    let list = state.personal.filter(person => matchesSectorFilter(person, sectorId));
+    if (!state.personal || !state.sectores) return [];
+    const sector = getSectorById(sectorId);
+    if (!sector) return [];
+
+    const result = [];
+    const seenIds = new Set();
+    const addPerson = (p) => {
+      if (p && !seenIds.has(p.id)) {
+        seenIds.add(p.id);
+        result.push(p);
+      }
+    };
+
+    const cardRespName = sector.id === 'sec-snaf' ? 'Dra. Marta Laura Iriarte Duberti' : (sector.responsable || '');
+    const excludedResps = [...getAncestorResponsables(sector), cardRespName].filter(Boolean);
+    const isExcludedHead = (p) => excludedResps.some(r => personMatchesResp(p, r));
+
+    // 1. Direct staff of this sector (excluding the sector's own encargado/head)
+    state.personal.forEach(p => {
+      if ((p.sectores || []).some(a => a.sector_id === sector.id)) {
+        if (!isExcludedHead(p)) {
+          addPerson(p);
+        }
+      }
+    });
+
+    // 2. Child sectors: if child has an encargado, include ONLY that encargado; otherwise include child's subordinates
+    let children = state.sectores.filter(c => c.parent_id === sector.id);
+    if (sector.id === 'sec-snaf') {
+      const topOrder = {
+        'despacho-general': 1,
+        'informatica': 2,
+        'rrhh': 3,
+        'prensa': 4,
+        'planificacion': 5,
+        'coord-adm': 6,
+        'dir-ninez': 7,
+        'dir-dispositivos': 8
+      };
+      children.sort((a, b) => (topOrder[a.id] || 99) - (topOrder[b.id] || 99));
+    }
+
+    children.forEach(ch => {
+      const chEncargados = getSectorOwnEncargados(ch);
+      if (chEncargados.length > 0) {
+        chEncargados.forEach(enc => {
+          if (!isExcludedHead(enc)) addPerson(enc);
+        });
+      } else {
+        getPersonnelInSector(ch.id).forEach(subP => {
+          if (!isExcludedHead(subP)) addPerson(subP);
+        });
+      }
+    });
 
     if (sectorId === 'informatica') {
-      list.sort((a, b) => {
+      result.sort((a, b) => {
         const aIsDario = (a.apellidos || '').toUpperCase().includes('ORQUERA') || (a.nombres || '').toUpperCase().includes('DARIO') || (a.nombres || '').toUpperCase().includes('DARÍO');
         const bIsDario = (b.apellidos || '').toUpperCase().includes('ORQUERA') || (b.nombres || '').toUpperCase().includes('DARIO') || (b.nombres || '').toUpperCase().includes('DARÍO');
         if (aIsDario && !bIsDario) return -1;
@@ -994,7 +1152,7 @@
       });
     }
 
-    return list;
+    return result;
   }
 
   function getSectorById(sectorId) {

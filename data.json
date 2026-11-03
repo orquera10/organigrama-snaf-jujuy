@@ -3192,7 +3192,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-guillermo-snopek",
           "sector_nombre": "C.D.I. Guillermo Snopek",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "Responsable",
@@ -4961,7 +4961,7 @@
       "observaciones_generales": "Completó Aula Virtual (pendiente instancia presencial)",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -5802,7 +5802,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-eva-peron",
           "sector_nombre": "C.D.I. Eva Peron",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -6798,7 +6798,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-eva-peron",
           "sector_nombre": "C.D.I. Eva Peron",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -6967,7 +6967,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -7063,7 +7063,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "Responsable",
@@ -8973,7 +8973,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "sede-dpdc",
           "sector_nombre": "Direccion de Sistema de Cuidados",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -9005,7 +9005,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-eva-peron",
           "sector_nombre": "C.D.I. Eva Peron",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "Responsable",
@@ -9229,7 +9229,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-guillermo-snopek",
           "sector_nombre": "C.D.I. Guillermo Snopek",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -9517,7 +9517,7 @@
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",

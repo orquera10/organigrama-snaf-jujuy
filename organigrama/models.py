@@ -32,6 +32,9 @@ class OrganigramaState(models.Model):
         """
         obj = cls.objects.filter(name='principal').first()
         if obj:
+            if cls._sanitize_state_data(obj.data):
+                obj.version += 1
+                obj.save(update_fields=['data', 'version', 'updated_at'])
             return obj
 
         # Cargar datos iniciales
@@ -61,9 +64,34 @@ class OrganigramaState(models.Model):
             except Exception as e:
                 print(f"[OrganigramaState] Error al leer {json_path}: {e}")
 
+        cls._sanitize_state_data(initial_dict)
+
         obj = cls.objects.create(
             name='principal',
             data=initial_dict,
             version=1
         )
         return obj
+
+    @staticmethod
+    def _sanitize_state_data(data):
+        if not isinstance(data, dict):
+            return False
+        changed = False
+        for p in data.get('personal', []):
+            for a in p.get('sectores', []):
+                if a.get('sector_id') == 'sec-snaf':
+                    snom = a.get('sector_nombre', '')
+                    if 'Guillermo Snopek' in snom:
+                        a['sector_id'] = 'cdi-guillermo-snopek'
+                        changed = True
+                    elif 'Santa Cecilia' in snom:
+                        a['sector_id'] = 'cdi-santa-cecilia'
+                        changed = True
+                    elif 'Eva Peron' in snom or 'Eva Perón' in snom:
+                        a['sector_id'] = 'cdi-eva-peron'
+                        changed = True
+                    elif 'Sistema de Cuidados' in snom:
+                        a['sector_id'] = 'sede-dpdc'
+                        changed = True
+        return changed

@@ -65,127 +65,6 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "descripcion": "Secretaría privada y agenda institucional dentro del área de Despacho."
     },
     {
-      "id": "informatica",
-      "nombre": "Informática / Sistemas",
-      "nivel": 1,
-      "tipo": "Área Técnica",
-      "parent_id": "sec-snaf",
-      "responsable": "A designar",
-      "cargo_responsable": "Sin referente designado",
-      "color": "#2563eb",
-      "descripcion": "Soporte tecnológico, infraestructura de redes, sistemas y gestión GDE."
-    },
-    {
-      "id": "rrhh",
-      "nombre": "Recursos Humanos",
-      "nivel": 1,
-      "tipo": "Área Operativa",
-      "parent_id": "sec-snaf",
-      "responsable": "Fabiana Alejandra Vivas",
-      "cargo_responsable": "Responsable",
-      "color": "#059669",
-      "descripcion": "Administración del personal, legajos, asistencia y licencias."
-    },
-    {
-      "id": "prensa",
-      "nombre": "Prensa y Comunicación",
-      "nivel": 1,
-      "tipo": "Área Técnica",
-      "parent_id": "sec-snaf",
-      "responsable": "Dra. Marta Laura Iriarte Duberti",
-      "cargo_responsable": "Supervisión Directa",
-      "color": "#8b5cf6",
-      "descripcion": "Comunicación institucional, prensa y difusión de actividades."
-    },
-    {
-      "id": "planificacion",
-      "nombre": "Planificación y Capacitación",
-      "nivel": 1,
-      "tipo": "Área Técnica",
-      "parent_id": "sec-snaf",
-      "responsable": "Ileana Leguizamón",
-      "cargo_responsable": "Profesional Responsable",
-      "color": "#d97706",
-      "descripcion": "Diseño de planes estratégicos y formación continua institucional."
-    },
-    {
-      "id": "coord-adm",
-      "nombre": "Coordinación de Gestión Administrativa",
-      "nivel": 1,
-      "tipo": "Coordinación General",
-      "parent_id": "sec-snaf",
-      "responsable": "María José Chara",
-      "cargo_responsable": "Coordinadora (Jerárquico)",
-      "color": "#0d9488",
-      "descripcion": "Coordinación financiera, contable, de suministros y operativa de la Secretaría."
-    },
-    {
-      "id": "privada-adm",
-      "nombre": "Privada Gestión Administrativa",
-      "nivel": 2,
-      "tipo": "Área de Apoyo",
-      "parent_id": "coord-adm",
-      "responsable": "María José Chara",
-      "cargo_responsable": "Coordinadora",
-      "color": "#14b8a6",
-      "descripcion": "Soporte administrativo y coordinación de despacho contable."
-    },
-    {
-      "id": "compras",
-      "nombre": "Compras y Suministros",
-      "nivel": 2,
-      "tipo": "Área Operativa",
-      "parent_id": "coord-adm",
-      "responsable": "María José Chara",
-      "cargo_responsable": "Supervisión Directa",
-      "color": "#0f766e",
-      "descripcion": "Adquisición de bienes, insumos y contrataciones de servicios."
-    },
-    {
-      "id": "presupuesto",
-      "nombre": "Registro y Control Presupuestario",
-      "nivel": 2,
-      "tipo": "Área Operativa",
-      "parent_id": "coord-adm",
-      "responsable": "Marcelo Rubén Jorqui",
-      "cargo_responsable": "Responsable",
-      "color": "#15803d",
-      "descripcion": "Seguimiento presupuestario, imputaciones preventivas y definitivas."
-    },
-    {
-      "id": "info-contable",
-      "nombre": "Información Contable",
-      "nivel": 2,
-      "tipo": "Área Operativa",
-      "parent_id": "coord-adm",
-      "responsable": "Atilio Miguel Cruz",
-      "cargo_responsable": "Responsable",
-      "color": "#047857",
-      "descripcion": "Rendición de cuentas, balances y registraciones contables."
-    },
-    {
-      "id": "tesoreria",
-      "nombre": "Tesorería",
-      "nivel": 2,
-      "tipo": "Área Operativa",
-      "parent_id": "coord-adm",
-      "responsable": "María Evangelina Garramuño",
-      "cargo_responsable": "Responsable",
-      "color": "#16a34a",
-      "descripcion": "Gestión de fondos, pagos, cuentas bancarias y caja chica."
-    },
-    {
-      "id": "mantenimiento",
-      "nombre": "Mantenimiento y Servicios Generales",
-      "nivel": 2,
-      "tipo": "Área Operativa",
-      "parent_id": "coord-adm",
-      "responsable": "Juan Carlos Aguirre",
-      "cargo_responsable": "Responsable",
-      "color": "#b45309",
-      "descripcion": "Mantenimiento edilicio, parque automotor e infraestructura física."
-    },
-    {
       "id": "dir-ninez",
       "nombre": "Dirección de Niñez, Adolescencia y Familia",
       "nivel": 1,
@@ -258,7 +137,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "tipo": "Coordinación Especializada",
       "parent_id": "dir-ninez",
       "responsable": "Nora Roxana Guerrero",
-      "cargo_responsable": "Responsable a cargo",
+      "cargo_responsable": "Coordinadora (Jerárquico)",
       "color": "#ea580c",
       "descripcion": "Promoción y divulgación activa de los derechos de NNyA en el territorio."
     },
@@ -815,6 +694,127 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "telefono_guardia": "-",
       "cobertura": "EL PUENTE LAVALLEN EL CANAL SAUCE GUACHO ARENALES SANTA CLARA FINCA SANTA MURCIA",
       "descripcion": "Atención territorial descentralizada en Santa Clara y zonas de influencia."
+    },
+    {
+      "id": "rrhh",
+      "nombre": "Recursos Humanos",
+      "nivel": 1,
+      "tipo": "Área Operativa",
+      "parent_id": "sec-snaf",
+      "responsable": "Fabiana Alejandra Vivas",
+      "cargo_responsable": "Responsable",
+      "color": "#059669",
+      "descripcion": "Administración del personal, legajos, asistencia y licencias."
+    },
+    {
+      "id": "informatica",
+      "nombre": "Informática / Sistemas",
+      "nivel": 1,
+      "tipo": "Área Técnica",
+      "parent_id": "sec-snaf",
+      "responsable": "A designar",
+      "cargo_responsable": "Sin referente designado",
+      "color": "#2563eb",
+      "descripcion": "Soporte tecnológico, infraestructura de redes, sistemas y gestión GDE."
+    },
+    {
+      "id": "prensa",
+      "nombre": "Prensa y Comunicación",
+      "nivel": 1,
+      "tipo": "Área Técnica",
+      "parent_id": "sec-snaf",
+      "responsable": "Dra. Marta Laura Iriarte Duberti",
+      "cargo_responsable": "Supervisión Directa",
+      "color": "#8b5cf6",
+      "descripcion": "Comunicación institucional, prensa y difusión de actividades."
+    },
+    {
+      "id": "planificacion",
+      "nombre": "Planificación y Capacitación",
+      "nivel": 1,
+      "tipo": "Área Técnica",
+      "parent_id": "sec-snaf",
+      "responsable": "Ileana Leguizamón",
+      "cargo_responsable": "Profesional Responsable",
+      "color": "#d97706",
+      "descripcion": "Diseño de planes estratégicos y formación continua institucional."
+    },
+    {
+      "id": "coord-adm",
+      "nombre": "Coordinación de Gestión Administrativa",
+      "nivel": 1,
+      "tipo": "Coordinación General",
+      "parent_id": "sec-snaf",
+      "responsable": "María José Chara",
+      "cargo_responsable": "Coordinadora (Jerárquico)",
+      "color": "#0d9488",
+      "descripcion": "Coordinación financiera, contable, de suministros y operativa de la Secretaría."
+    },
+    {
+      "id": "privada-adm",
+      "nombre": "Privada Gestión Administrativa",
+      "nivel": 2,
+      "tipo": "Área de Apoyo",
+      "parent_id": "coord-adm",
+      "responsable": "María José Chara",
+      "cargo_responsable": "Coordinadora",
+      "color": "#14b8a6",
+      "descripcion": "Soporte administrativo y coordinación de despacho contable."
+    },
+    {
+      "id": "compras",
+      "nombre": "Compras y Suministros",
+      "nivel": 2,
+      "tipo": "Área Operativa",
+      "parent_id": "coord-adm",
+      "responsable": "María José Chara",
+      "cargo_responsable": "Supervisión Directa",
+      "color": "#0f766e",
+      "descripcion": "Adquisición de bienes, insumos y contrataciones de servicios."
+    },
+    {
+      "id": "presupuesto",
+      "nombre": "Registro y Control Presupuestario",
+      "nivel": 2,
+      "tipo": "Área Operativa",
+      "parent_id": "coord-adm",
+      "responsable": "Marcelo Rubén Jorqui",
+      "cargo_responsable": "Responsable",
+      "color": "#15803d",
+      "descripcion": "Seguimiento presupuestario, imputaciones preventivas y definitivas."
+    },
+    {
+      "id": "info-contable",
+      "nombre": "Información Contable",
+      "nivel": 2,
+      "tipo": "Área Operativa",
+      "parent_id": "coord-adm",
+      "responsable": "Atilio Miguel Cruz",
+      "cargo_responsable": "Responsable",
+      "color": "#047857",
+      "descripcion": "Rendición de cuentas, balances y registraciones contables."
+    },
+    {
+      "id": "tesoreria",
+      "nombre": "Tesorería",
+      "nivel": 2,
+      "tipo": "Área Operativa",
+      "parent_id": "coord-adm",
+      "responsable": "María Evangelina Garramuño",
+      "cargo_responsable": "Responsable",
+      "color": "#16a34a",
+      "descripcion": "Gestión de fondos, pagos, cuentas bancarias y caja chica."
+    },
+    {
+      "id": "mantenimiento",
+      "nombre": "Mantenimiento y Servicios Generales",
+      "nivel": 2,
+      "tipo": "Área Operativa",
+      "parent_id": "coord-adm",
+      "responsable": "Juan Carlos Aguirre",
+      "cargo_responsable": "Responsable",
+      "color": "#b45309",
+      "descripcion": "Mantenimiento edilicio, parque automotor e infraestructura física."
     },
     {
       "id": "dir-dispositivos",
@@ -3192,7 +3192,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-guillermo-snopek",
           "sector_nombre": "C.D.I. Guillermo Snopek",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "Responsable",
@@ -4961,7 +4961,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "Completó Aula Virtual (pendiente instancia presencial)",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -5428,7 +5428,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "apellidos": "GUERRERO",
       "nombres": "NORA ROXANA",
       "telefono": "",
-      "profesion": "Responsable de Área",
+      "profesion": "",
       "matricula": "",
       "sit_revista": "Planta / Contrato",
       "horario": "Lunes a Viernes 7:00 a 13:00",
@@ -5438,16 +5438,16 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "modalidad_capacitacion": "",
       "calificaciones_virtual": "",
       "asistencia_presencial": "06/04/2026",
-      "observaciones_generales": "Responsable a cargo hasta designación de nuevo coordinador",
+      "observaciones_generales": "",
       "sectores": [
         {
           "sector_id": "coord-promocion",
           "sector_nombre": "Coordinacion de Promocion de Derechos",
           "reparticion": "Secretaria de Niñez, Adolescencia y Familia",
-          "funcion": "Responsable a cargo",
+          "funcion": "Coordinadora (Jerarquico)",
           "condicion": "Responsable / Jerárquico",
           "superior_inmediato": "Dra. Iriarte",
-          "observaciones": "Responsable a cargo hasta designación de nuevo coordinador"
+          "observaciones": ""
         }
       ],
       "is_multi_sector": false
@@ -5802,7 +5802,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-eva-peron",
           "sector_nombre": "C.D.I. Eva Peron",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -6657,7 +6657,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "apellidos": "ORQUERA",
       "nombres": "DARIO",
       "telefono": "",
-      "profesion": "Personal Técnico (Informática / Sistemas)",
+      "profesion": "Informática / Sistemas",
       "matricula": "",
       "sit_revista": "Planta / Contrato",
       "horario": "Lunes a Viernes 7:00 a 13:00",
@@ -6667,16 +6667,16 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "modalidad_capacitacion": "Aula Virtual + Presencial",
       "calificaciones_virtual": "CCOO: 10 | GEDO: 10 | EE: 9,6",
       "asistencia_presencial": "1 encuentro (21/05/2026)",
-      "observaciones_generales": "Personal Técnico del área de Informática",
+      "observaciones_generales": "Personal del área de Informática",
       "sectores": [
         {
           "sector_id": "informatica",
           "sector_nombre": "Informatica",
           "reparticion": "Secretaria de Niñez, Adolescencia y Familia",
-          "funcion": "Personal Técnico",
+          "funcion": "Informática / Sistemas",
           "condicion": "Personal Técnico",
           "superior_inmediato": "Dra. Iriarte",
-          "observaciones": "Personal Técnico de Informática"
+          "observaciones": "Personal de Informática"
         }
       ],
       "is_multi_sector": false
@@ -6689,7 +6689,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "apellidos": "MAGAÑA",
       "nombres": "CERON ALEXANDER",
       "telefono": "",
-      "profesion": "Personal Técnico (Informática / Sistemas)",
+      "profesion": "",
       "matricula": "",
       "sit_revista": "Planta / Contrato",
       "horario": "Lunes a Viernes 7:00 a 13:00",
@@ -6699,16 +6699,16 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "modalidad_capacitacion": "Aula Virtual + Presencial",
       "calificaciones_virtual": "CCOO: 8,8 | GEDO: 9,1 | EE: 8",
       "asistencia_presencial": "2 encuentros (20/05/2026, 22/05/2026)",
-      "observaciones_generales": "Personal Técnico del área de Informática / Referente GDE",
+      "observaciones_generales": "Referente Informático GDE / ALS (SNAF)",
       "sectores": [
         {
           "sector_id": "informatica",
           "sector_nombre": "Informatica",
           "reparticion": "Secretaria de Niñez, Adolescencia y Familia",
-          "funcion": "Personal Técnico",
-          "condicion": "Personal Técnico",
+          "funcion": "ADMINISTRATIVO",
+          "condicion": "Titular",
           "superior_inmediato": "Dra. Iriarte",
-          "observaciones": "Personal Técnico - Referente Informático GDE / ALS (SNAF)"
+          "observaciones": "Referente Informático GDE / ALS (SNAF)"
         }
       ],
       "is_multi_sector": false
@@ -6798,7 +6798,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-eva-peron",
           "sector_nombre": "C.D.I. Eva Peron",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -6967,7 +6967,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -7063,7 +7063,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "Responsable",
@@ -8973,7 +8973,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "sede-dpdc",
           "sector_nombre": "Direccion de Sistema de Cuidados",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -9005,7 +9005,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-eva-peron",
           "sector_nombre": "C.D.I. Eva Peron",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "Responsable",
@@ -9229,7 +9229,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-guillermo-snopek",
           "sector_nombre": "C.D.I. Guillermo Snopek",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
@@ -9517,7 +9517,7 @@ window.INITIAL_ORGANIGRAMA_DATA = {
       "observaciones_generales": "",
       "sectores": [
         {
-          "sector_id": "sec-snaf",
+          "sector_id": "cdi-santa-cecilia",
           "sector_nombre": "C.D.I. Santa Cecilia",
           "reparticion": "Direccion Provincial de Dispositivos de Cuidados",
           "funcion": "ADMINISTRATIVO",
