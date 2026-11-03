@@ -30,12 +30,33 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 # ALLOWED_HOSTS
-allowed_hosts_str = os.environ.get('ALLOWED_HOSTS', '*')
-ALLOWED_HOSTS = [h.strip() for h in allowed_hosts_str.split(',') if h.strip()]
+allowed_hosts_str = os.environ.get(
+    'ALLOWED_HOSTS',
+    '*,organigrama.secnaf.jujuy.gob.ar,45.186.124.153,localhost,127.0.0.1'
+)
+ALLOWED_HOSTS = list({h.strip() for h in allowed_hosts_str.split(',') if h.strip()} | {
+    '*', 'organigrama.secnaf.jujuy.gob.ar', '45.186.124.153', 'localhost', '127.0.0.1'
+})
 
 # CSRF_TRUSTED_ORIGINS: essential for Coolify / Traefik reverse proxies (HTTPS)
-csrf_trusted_str = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://* https://*')
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in csrf_trusted_str.split() if o.strip()]
+default_csrf_origins = (
+    'https://organigrama.secnaf.jujuy.gob.ar '
+    'http://organigrama.secnaf.jujuy.gob.ar '
+    'http://45.186.124.153 '
+    'https://45.186.124.153 '
+    'http://localhost:8000 '
+    'http://127.0.0.1:8000'
+)
+csrf_trusted_str = os.environ.get('CSRF_TRUSTED_ORIGINS', default_csrf_origins)
+CSRF_TRUSTED_ORIGINS = list({
+    o.strip().rstrip('/') for o in (csrf_trusted_str + ' ' + default_csrf_origins).replace(',', ' ').split()
+    if o.strip() and ('://' in o) and ('*' not in o or '*.' in o)
+} | {
+    'https://organigrama.secnaf.jujuy.gob.ar',
+    'http://organigrama.secnaf.jujuy.gob.ar',
+    'http://45.186.124.153',
+    'https://45.186.124.153',
+})
 
 # Application definition
 INSTALLED_APPS = [

@@ -10,8 +10,8 @@ services:
     environment:
       - SECRET_KEY=snaf-super-secret-key-coolify-production-change-me
       - DEBUG=False
-      - ALLOWED_HOSTS=*
-      - CSRF_TRUSTED_ORIGINS=http://* https://*
+      - ALLOWED_HOSTS=*,organigrama.secnaf.jujuy.gob.ar,45.186.124.153
+      - CSRF_TRUSTED_ORIGINS=https://organigrama.secnaf.jujuy.gob.ar http://organigrama.secnaf.jujuy.gob.ar http://45.186.124.153 https://45.186.124.153
       - DATA_DIR=/app/data
     volumes:
       - organigrama_data:/app/data
