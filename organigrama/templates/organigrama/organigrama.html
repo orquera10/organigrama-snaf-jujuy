@@ -8,9 +8,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'organigrama/vendor/phosphor/style.css' %}">
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-  <link rel="stylesheet" href="{% static 'organigrama/css/styles.css' %}?v={{ version }}.8">
+  <link rel="stylesheet" href="{% static 'organigrama/vendor/flaticon/uicons-regular-rounded.css' %}">
+  <link rel="stylesheet" href="{% static 'organigrama/vendor/flaticon/uicons-solid-rounded.css' %}">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  <link rel="stylesheet" href="{% static 'organigrama/css/styles.css' %}?v={{ version }}.10">
   <style>
     /* Estilos específicos de la Vista de Consulta */
     .public-badge {
@@ -60,13 +62,13 @@
       <div class="header-top-right">
         {% if request.user.is_staff or request.user.is_superuser %}
           <a href="{% url 'gestion' %}" class="btn btn-primary btn-sm" title="Ir al Panel de Gestión y Edición">
-            <i class="ph ph-gear" style="font-size: 14px;"></i>
+            <i class="fi fi-rr-settings" style="font-size: 13px;"></i>
             <span>Panel de Gestión</span>
           </a>
         {% endif %}
 
         <div class="user-session-badge">
-          <i class="ph ph-user" style="font-size: 14px; color: #64748b;"></i>
+          <i class="fi fi-rr-user" style="font-size: 13px; color: #64748b;"></i>
           <span class="user-name">{{ request.user.first_name|default:request.user.username }}</span>
           {% if request.user.is_staff %}
             <span class="role-badge role-admin">ADMIN</span>
@@ -76,7 +78,7 @@
           <div class="user-session-divider"></div>
           <a href="{% url 'logout' %}" title="Cerrar Sesión" class="logout-link">
             <span>Salir</span>
-            <i class="ph ph-sign-out" style="font-size: 13px;"></i>
+            <i class="fi fi-rr-sign-out-alt" style="font-size: 12.5px;"></i>
           </a>
         </div>
       </div>
@@ -92,7 +94,7 @@
       <!-- Header Live Metrics -->
       <div class="header-kpis">
         <div class="kpi-pill primary" title="Total de agentes registrados">
-          <i class="ph ph-users"></i>
+          <i class="fi fi-rr-users-alt"></i>
           <div>
             <strong id="kpi-total-personal">0</strong>
             <span class="kpi-label"> Agentes</span>
@@ -100,7 +102,7 @@
         </div>
         <div class="kpi-divider"></div>
         <div class="kpi-pill emerald" title="Total de sectores, programas y dependencias">
-          <i class="ph ph-tree-structure"></i>
+          <i class="fi fi-rr-sitemap"></i>
           <div>
             <strong id="kpi-total-sectores">0</strong>
             <span class="kpi-label"> Sectores</span>
@@ -108,7 +110,7 @@
         </div>
         <div class="kpi-divider"></div>
         <div class="kpi-pill amber" title="Personal que cumple funciones en 2 o más sectores">
-          <i class="ph ph-star"></i>
+          <i class="fi fi-rr-star"></i>
           <div>
             <strong id="kpi-multi-sector">0</strong>
             <span class="kpi-label"> Multi-Sector</span>
@@ -116,7 +118,7 @@
         </div>
         <div class="kpi-divider"></div>
         <div class="kpi-pill purple" title="Capacitación GDE Completada">
-          <i class="ph ph-certificate"></i>
+          <i class="fi fi-rr-diploma"></i>
           <div>
             <strong id="kpi-gde-cap">0%</strong>
             <span class="kpi-label"> GDE Cap.</span>
@@ -130,7 +132,7 @@
   {% if request.GET.denied %}
     <div style="background: #fef2f2; border-bottom: 1px solid #fecaca; color: #991b1b; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 13.5px; font-weight: 600;">
       <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="font-size: 18px;">⚠️</span>
+        <i class="fi fi-rr-triangle-warning" style="font-size: 16px;"></i>
         <span>Acceso exclusivo: Tu usuario (<strong>{{ request.user.first_name|default:request.user.username }}</strong>) tiene permisos de consulta para el Organigrama. El panel de gestión y edición está restringido al administrador.</span>
       </div>
       <a href="{% url 'organigrama' %}" style="color: #991b1b; text-decoration: none; font-size: 18px; padding: 0 6px;">&times;</a>
@@ -148,7 +150,7 @@
       <div class="org-toolbar">
         <div class="org-toolbar-left">
           <div class="search-box">
-            <i class="ph ph-magnifying-glass"></i>
+            <i class="fi fi-rr-search"></i>
             <input type="text" id="org-search-input" placeholder="Buscar por sector, autoridad o agente...">
           </div>
 
@@ -161,26 +163,26 @@
           </select>
 
           <button class="btn btn-outline btn-sm" id="btn-toggle-multi-highlight" title="Resaltar sectores con personal en múltiples funciones">
-            <i class="ph ph-star" style="color: #f59e0b; font-size: 14px;"></i>
+            <i class="fi fi-sr-star" style="color: #f59e0b; font-size: 13px;"></i>
             <span>Resaltar Multi-Sector</span>
           </button>
         </div>
 
         <div class="org-toolbar-right">
           <button class="btn btn-outline btn-sm" id="btn-fit-screen" title="Ajustar y centrar el organigrama a la pantalla">
-            <i class="ph ph-arrows-out" style="font-size: 14px;"></i>
+            <i class="fi fi-rr-expand" style="font-size: 13px;"></i>
             <span>Ajustar</span>
           </button>
           <button class="btn btn-outline btn-sm" id="btn-expand-all" title="Expandir todas las ramas y sub-sectores">
-            <i class="ph ph-arrows-out-cardinal" style="font-size: 14px;"></i>
+            <i class="fi fi-rr-arrows-alt" style="font-size: 13px;"></i>
             <span>Expandir</span>
           </button>
           <button class="btn btn-outline btn-sm" id="btn-collapse-all" title="Colapsar a nivel de Áreas Principales">
-            <i class="ph ph-arrows-in-cardinal" style="font-size: 14px;"></i>
+            <i class="fi fi-rr-compress" style="font-size: 13px;"></i>
             <span>Colapsar</span>
           </button>
           <button class="btn btn-outline btn-sm" id="btn-print-org" title="Imprimir o Exportar a PDF">
-            <i class="ph ph-printer" style="font-size: 14px;"></i>
+            <i class="fi fi-rr-print" style="font-size: 13px;"></i>
             <span>Imprimir</span>
           </button>
         </div>
@@ -195,22 +197,22 @@
           <div class="legend-item"><div class="legend-color" style="background: #0284c7;"></div> Direcciones / Coord.</div>
           <div class="legend-item"><div class="legend-color" style="background: #059669;"></div> Áreas Operativas / Contables</div>
           <div class="legend-item"><div class="legend-color" style="background: #7c3aed;"></div> Dispositivos / Programas</div>
-          <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> <i class="ph ph-star" style="color: #f59e0b;"></i> Multi-Sector</div>
+          <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> <i class="fi fi-sr-star" style="color: #f59e0b; font-size: 11px;"></i> Multi-Sector</div>
         </div>
 
         <!-- Botones de Zoom flotantes -->
         <div class="canvas-floating-controls">
           <button class="control-btn" id="btn-zoom-in" title="Acercar (+)">
-            <i class="ph ph-plus" style="font-size: 17px;"></i>
+            <i class="fi fi-rr-plus" style="font-size: 15px;"></i>
           </button>
           <button class="control-btn" id="btn-zoom-out" title="Alejar (-)">
-            <i class="ph ph-minus" style="font-size: 17px;"></i>
+            <i class="fi fi-rr-minus" style="font-size: 15px;"></i>
           </button>
           <button class="control-btn" id="btn-fit-floating" title="Ajustar y centrar a la pantalla">
-            <i class="ph ph-arrows-out" style="font-size: 16px;"></i>
+            <i class="fi fi-rr-expand" style="font-size: 14px;"></i>
           </button>
           <button class="control-btn" id="btn-zoom-reset" title="Restablecer vista (100%)">
-            <i class="ph ph-arrow-counter-clockwise" style="font-size: 16px;"></i>
+            <i class="fi fi-rr-refresh" style="font-size: 14px;"></i>
           </button>
         </div>
 
@@ -240,7 +242,7 @@
               <h3 id="vp-nombre-completo" style="color: white; font-size: 18px; margin: 0; font-weight: 800;">
                 APELLIDOS, Nombres
               </h3>
-              <span id="vp-multi-badge" style="display:none; background: #f59e0b; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px;">⭐ Multi-Sector</span>
+              <span id="vp-multi-badge" style="display:none; background: #f59e0b; color: white; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px;"><i class="fi fi-sr-star" style="font-size: 10px; margin-right: 3px;"></i>Multi-Sector</span>
             </div>
             <div style="font-size: 13px; color: #94a3b8; margin-top: 3px;">
               <span id="vp-profesion-header">Profesión</span> · CUIL: <strong id="vp-cuil-header" style="color: #e2e8f0;">-</strong>
@@ -248,7 +250,7 @@
           </div>
         </div>
         <button class="modal-close-btn" id="btn-close-modal-view-person" style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.25);" title="Cerrar ficha (o clic afuera / Esc)">
-          <i class="ph ph-x" style="font-size: 16px;"></i>
+          <i class="fi fi-rr-cross-small" style="font-size: 18px;"></i>
         </button>
       </div>
 
@@ -257,7 +259,7 @@
         <!-- Ficha Section 1: Contacto y Situación de Revista -->
         <div class="view-card-section">
           <div class="view-section-header">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <i class="fi fi-rr-user" style="font-size: 15px;"></i>
             <span>Información Personal y Profesional</span>
           </div>
           <div class="view-grid-3">
@@ -295,7 +297,7 @@
         <!-- Ficha Section 2: GDE & Capacitaciones -->
         <div class="view-card-section">
           <div class="view-section-header">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <i class="fi fi-rr-diploma" style="font-size: 15px;"></i>
             <span>Sistema GDE y Capacitaciones</span>
           </div>
           <div class="view-grid-3">
@@ -334,7 +336,7 @@
         <div class="view-card-section">
           <div class="view-section-header" style="justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+              <i class="fi fi-rr-sitemap" style="font-size: 15px;"></i>
               <span>Sectores y Funciones Asignadas</span>
             </div>
             <span id="vp-sectors-count-badge" class="badge-blue">1 Sector</span>
@@ -365,7 +367,7 @@
           </h2>
         </div>
         <button class="drawer-close-btn" id="btn-close-drawer-sector" title="Cerrar panel lateral (o clic afuera / Esc)">
-          <i class="ph ph-x" style="font-size: 15px;"></i>
+          <i class="fi fi-rr-cross-small" style="font-size: 17px;"></i>
           <span>Cerrar</span>
         </button>
       </div>
@@ -394,7 +396,7 @@
         <div>
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
             <h4 style="font-size: 14px; font-weight: 700; color: var(--slate-800); display: flex; align-items: center; gap: 6px;">
-              <i class="ph ph-users" style="font-size: 16px; color: #2563eb;"></i> Personal Asignado a este Sector (<span id="drawer-staff-count">0</span>)
+              <i class="fi fi-rr-users-alt" style="font-size: 15px; color: #2563eb;"></i> Personal Asignado a este Sector (<span id="drawer-staff-count">0</span>)
             </h4>
           </div>
 
@@ -421,7 +423,7 @@
   </script>
 
   <!-- Scripts: Datos iniciales y Lógica de la vista pública -->
-  <script src="{% static 'organigrama/js/initialData.js' %}?v={{ version }}.9"></script>
-  <script src="{% static 'organigrama/js/visor.js' %}?v={{ version }}.9"></script>
+  <script src="{% static 'organigrama/js/initialData.js' %}?v={{ version }}.10"></script>
+  <script src="{% static 'organigrama/js/visor.js' %}?v={{ version }}.10"></script>
 </body>
 </html>

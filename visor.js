@@ -555,7 +555,7 @@
 
           <div class="card-staff-toggle-wrapper">
             <button type="button" class="btn-toggle-staff" title="Ampliar cuadro y ver usuarios dependientes">
-              <span class="btn-toggle-text"><i class="ph ph-users"></i> ${staffCountLabel} <i class="ph ph-caret-down"></i></span>
+              <span class="btn-toggle-text"><i class="fi fi-rr-users-alt"></i> ${staffCountLabel} <i class="fi fi-rr-angle-small-down"></i></span>
             </button>
           </div>
         ` : ''}
@@ -571,10 +571,10 @@
           const isExpanded = card.classList.toggle('expanded-staff');
           const textSpan = btnToggle.querySelector('.btn-toggle-text');
           if (isExpanded) {
-            textSpan.innerHTML = `<i class="ph ph-caret-up"></i> Ocultar (${staff.length})`;
+            textSpan.innerHTML = `<i class="fi fi-rr-angle-small-up"></i> Ocultar (${staff.length})`;
             btnToggle.classList.add('active');
           } else {
-            textSpan.innerHTML = `<i class="ph ph-users"></i> ${staffCountLabel} <i class="ph ph-caret-down"></i>`;
+            textSpan.innerHTML = `<i class="fi fi-rr-users-alt"></i> ${staffCountLabel} <i class="fi fi-rr-angle-small-down"></i>`;
             btnToggle.classList.remove('active');
           }
         });
@@ -631,13 +631,13 @@
 
       if (isCollapsed) {
         toggleBtn.innerHTML = `
-          <i class="ph ph-plus" style="font-size: 11px;"></i>
+          <i class="fi fi-rr-plus" style="font-size: 10px;"></i>
           <span>${label}</span>
         `;
         toggleBtn.title = `Clic para ver ${label}`;
       } else {
         toggleBtn.innerHTML = `
-          <i class="ph ph-minus" style="font-size: 11px;"></i>
+          <i class="fi fi-rr-minus" style="font-size: 10px;"></i>
           <span>Colapsar</span>
         `;
         toggleBtn.title = 'Colapsar esta rama';
@@ -761,7 +761,7 @@
                 <div style="flex: 1;">
                   <div style="font-weight: 700; font-size: 13.5px; color: var(--slate-900);">
                     ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
-                    ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;">⭐</span>` : ''}
+                    ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;"><i class="fi fi-sr-star" style="font-size: 11px;"></i></span>` : ''}
                   </div>
                   <div style="font-size: 11.5px; color: #0284c7; font-weight: 600;">
                     ${escapeHtml(roleLabel)}
@@ -769,14 +769,14 @@
                   ${person.correo ? `<div style="font-size: 11px; color: #64748b; margin-top: 2px;">${escapeHtml(person.correo)}</div>` : ''}
                   ${otherSectors.length > 0 ? `
                     <div style="margin-top: 5px; font-size: 10.5px; color: #b45309; background: #fef3c7; padding: 2px 6px; border-radius: 4px; display: inline-block;">
-                      ⭐ Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
+                      <i class="fi fi-sr-star" style="font-size: 10px; margin-right: 3px;"></i>Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
                     </div>
                   ` : ''}
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
                 <button class="btn btn-outline btn-sm" onclick="window.SNAF_VIEWER.openViewPersonModal('${person.id}')" title="Ver ficha completa del encargado" style="padding: 5px 10px; font-size: 12px; font-weight: 600; background: white;">
-                  👁️ Ver Ficha
+                  <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Ver Ficha
                 </button>
               </div>
             </div>
@@ -806,10 +806,10 @@
     if (sector.num_opd && opdExtra) {
       opdExtra.style.display = 'block';
       opdExtra.innerHTML = `
-        ${sector.direccion ? `<div><strong>📍 Sede:</strong> ${escapeHtml(sector.direccion)}</div>` : ''}
-        ${sector.horario ? `<div><strong>⏰ Horario:</strong> ${escapeHtml(sector.horario)}</div>` : ''}
-        ${sector.telefono_guardia ? `<div><strong>📞 Guardia WIN:</strong> ${escapeHtml(sector.telefono_guardia)}</div>` : ''}
-        ${sector.cobertura ? `<div><strong>🗺️ Cobertura:</strong> ${escapeHtml(sector.cobertura)}</div>` : ''}
+        ${sector.direccion ? `<div><strong><i class="fi fi-rr-marker" style="font-size: 11px;"></i> Sede:</strong> ${escapeHtml(sector.direccion)}</div>` : ''}
+        ${sector.horario ? `<div><strong><i class="fi fi-rr-clock" style="font-size: 11px;"></i> Horario:</strong> ${escapeHtml(sector.horario)}</div>` : ''}
+        ${sector.telefono_guardia ? `<div><strong><i class="fi fi-rr-phone-call" style="font-size: 11px;"></i> Guardia WIN:</strong> ${escapeHtml(sector.telefono_guardia)}</div>` : ''}
+        ${sector.cobertura ? `<div><strong><i class="fi fi-rr-map" style="font-size: 11px;"></i> Cobertura:</strong> ${escapeHtml(sector.cobertura)}</div>` : ''}
       `;
     } else if (opdExtra) {
       opdExtra.style.display = 'none';
@@ -837,7 +837,7 @@
               <div style="flex: 1;">
                 <div style="font-weight: 700; font-size: 13.5px; color: var(--slate-900);">
                   ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
-                  ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;">⭐</span>` : ''}
+                  ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;"><i class="fi fi-sr-star" style="font-size: 11px;"></i></span>` : ''}
                 </div>
                 <div style="font-size: 12px; color: #0284c7; font-weight: 600;">
                   ${escapeHtml(thisRole?.funcion || person.profesion || 'Personal')}
@@ -847,7 +847,7 @@
 
                 ${otherSectors.length > 0 ? `
                   <div style="margin-top: 6px; font-size: 10.5px; color: #b45309; background: #fef3c7; padding: 2px 6px; border-radius: 4px; display: inline-block;">
-                    ⭐ Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
+                    <i class="fi fi-sr-star" style="font-size: 10px; margin-right: 3px;"></i>Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
                   </div>
                 ` : ''}
               </div>
@@ -855,7 +855,7 @@
 
             <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
               <button class="btn btn-outline btn-sm" onclick="window.SNAF_VIEWER.openViewPersonModal('${person.id}')" title="Ver ficha completa de este agente" style="padding: 5px 10px; font-size: 12px; font-weight: 600;">
-                👁️ Ver Ficha
+                <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Ver Ficha
               </button>
             </div>
           </div>
@@ -924,9 +924,9 @@
     const permisosEl = document.getElementById('vp-gde-permisos');
     if (permisosEl) {
       const perms = [];
-      if (person.caratulador) perms.push('📁 Caratulador');
-      if (person.asignador) perms.push('📤 Asignador');
-      permisosEl.textContent = perms.length > 0 ? perms.join(' · ') : 'Ninguno asignado';
+      if (person.caratulador) perms.push('<i class="fi fi-rr-folder" style="font-size: 12px;"></i> Caratulador');
+      if (person.asignador) perms.push('<i class="fi fi-rr-upload" style="font-size: 12px;"></i> Asignador');
+      permisosEl.innerHTML = perms.length > 0 ? perms.join(' &middot; ') : 'Ninguno asignado';
     }
 
     setText('vp-gde-cap', person.capacitacion_gde);

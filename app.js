@@ -994,7 +994,7 @@
 
           <div class="card-staff-toggle-wrapper">
             <button type="button" class="btn-toggle-staff" title="Ampliar cuadro y ver usuarios dependientes">
-              <span class="btn-toggle-text"><i class="ph ph-users"></i> ${staffCountLabel} <i class="ph ph-caret-down"></i></span>
+              <span class="btn-toggle-text"><i class="fi fi-rr-users-alt"></i> ${staffCountLabel} <i class="fi fi-rr-angle-small-down"></i></span>
             </button>
           </div>
         ` : ''}
@@ -1010,10 +1010,10 @@
           const isExpanded = card.classList.toggle('expanded-staff');
           const textSpan = btnToggle.querySelector('.btn-toggle-text');
           if (isExpanded) {
-            textSpan.innerHTML = `<i class="ph ph-caret-up"></i> Ocultar (${staff.length})`;
+            textSpan.innerHTML = `<i class="fi fi-rr-angle-small-up"></i> Ocultar (${staff.length})`;
             btnToggle.classList.add('active');
           } else {
-            textSpan.innerHTML = `<i class="ph ph-users"></i> ${staffCountLabel} <i class="ph ph-caret-down"></i>`;
+            textSpan.innerHTML = `<i class="fi fi-rr-users-alt"></i> ${staffCountLabel} <i class="fi fi-rr-angle-small-down"></i>`;
             btnToggle.classList.remove('active');
           }
         });
@@ -1072,13 +1072,13 @@
 
       if (isCollapsed) {
         toggleBtn.innerHTML = `
-          <i class="ph ph-plus" style="font-size: 11px;"></i>
+          <i class="fi fi-rr-plus" style="font-size: 10px;"></i>
           <span>${label}</span>
         `;
         toggleBtn.title = `Clic para ver ${label}`;
       } else {
         toggleBtn.innerHTML = `
-          <i class="ph ph-minus" style="font-size: 11px;"></i>
+          <i class="fi fi-rr-minus" style="font-size: 10px;"></i>
           <span>Colapsar</span>
         `;
         toggleBtn.title = 'Colapsar esta rama';
@@ -1217,7 +1217,7 @@
         const isItin = (sRole?.condicion || '').includes('Itinerante') || (sRole?.observaciones || '').includes('Itinerante');
         legalHtml = `
           <div class="opd-legal-badge ${isItin ? 'itinerant' : ''}">
-            <i class="ph ph-identification-card" style="font-size: 15px;"></i>
+            <i class="fi fi-rr-id-badge" style="font-size: 15px;"></i>
             <div>
               <strong>${escapeHtml(ab.apellidos + ', ' + ab.nombres)}</strong>
               ${ab.matricula ? ` <span style="font-size: 10px; opacity: 0.8;">[${escapeHtml(ab.matricula)}]</span>` : ''}
@@ -1228,7 +1228,7 @@
       } else {
         legalHtml = `
           <div class="opd-legal-badge" style="background: #f1f5f9; color: #64748b;">
-            <i class="ph ph-info" style="font-size: 15px;"></i>
+            <i class="fi fi-rr-info" style="font-size: 14px;"></i>
             <span>Sin asesor legal asignado</span>
           </div>
         `;
@@ -1246,14 +1246,14 @@
 
             ${opd.direccion ? `
               <div class="opd-detail-item">
-                <i class="ph ph-map-pin" style="font-size: 14px;"></i>
+                <i class="fi fi-rr-marker" style="font-size: 13px;"></i>
                 <span>${escapeHtml(opd.direccion)}</span>
               </div>
             ` : ''}
 
             ${opd.telefono_guardia && opd.telefono_guardia !== '-' ? `
               <div class="opd-detail-item">
-                <i class="ph ph-phone" style="font-size: 14px;"></i>
+                <i class="fi fi-rr-phone-call" style="font-size: 13px;"></i>
                 <span><strong>Guardia WIN:</strong> ${escapeHtml(opd.telefono_guardia)}</span>
               </div>
             ` : ''}
@@ -1519,11 +1519,11 @@
       const cap = (person.capacitacion_gde || '').toUpperCase();
       const mod = (person.modalidad_capacitacion || '');
       if (mod.toLowerCase().includes('virtual + presencial') || (cap === 'SI' && mod.toLowerCase().includes('presencial'))) {
-        gdeBadge = `<span class="badge-gde si">✔ Capacitado GDE</span>`;
+        gdeBadge = `<span class="badge-gde si"><i class="fi fi-rr-check" style="font-size: 10px; margin-right: 3px;"></i>Capacitado GDE</span>`;
       } else if (mod.toLowerCase().includes('aula virtual')) {
-        gdeBadge = `<span class="badge-gde virtual-pending">⏳ Virtual (Pend. Presencial)</span>`;
+        gdeBadge = `<span class="badge-gde virtual-pending"><i class="fi fi-rr-clock" style="font-size: 10px; margin-right: 3px;"></i>Virtual (Pend. Presencial)</span>`;
       } else {
-        gdeBadge = `<span class="badge-gde no">✖ Sin Capacitación</span>`;
+        gdeBadge = `<span class="badge-gde no"><i class="fi fi-rr-cross-small" style="font-size: 12px; margin-right: 2px;"></i>Sin Capacitación</span>`;
       }
 
       return `
@@ -1534,7 +1534,7 @@
               <div>
                 <div class="person-name" style="color: var(--primary-color);">
                   ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
-                  ${person.is_multi_sector ? `<span title="Desempeña funciones en más de un sector" style="color: #f59e0b; cursor: help;">⭐</span>` : ''}
+                  ${person.is_multi_sector ? `<span title="Desempeña funciones en más de un sector" style="color: #f59e0b; cursor: help; margin-left: 4px;"><i class="fi fi-sr-star" style="font-size: 11px;"></i></span>` : ''}
                 </div>
                 <div class="person-sub">${escapeHtml(person.sit_revista || 'Planta / Contrato')}</div>
               </div>
@@ -1543,7 +1543,7 @@
           <td>
             <div><strong>${escapeHtml(person.cuil || 'S/D')}</strong></div>
             <div style="font-size: 11.5px; color: #64748b;">${escapeHtml(person.correo || '-')}</div>
-            ${person.telefono ? `<div style="font-size: 11px; color: #0284c7;">📞 ${escapeHtml(person.telefono)}</div>` : ''}
+            ${person.telefono ? `<div style="font-size: 11px; color: #0284c7; display: flex; align-items: center; gap: 4px; margin-top: 2px;"><i class="fi fi-rr-phone-call" style="font-size: 11px;"></i> ${escapeHtml(person.telefono)}</div>` : ''}
           </td>
           <td>
             <div>${escapeHtml(person.profesion || 'Administrativo')}</div>
@@ -1561,13 +1561,13 @@
           <td style="text-align: right;">
             <div class="action-buttons" style="justify-content: flex-end;">
               <button class="icon-action-btn" title="Ver ficha de legajo completa" onclick="window.SNAF_APP.openViewPersonModal('${person.id}')" style="color: #0284c7;">
-                <i class="ph ph-eye" style="font-size: 15px;"></i>
+                <i class="fi fi-rr-eye" style="font-size: 14px;"></i>
               </button>
               <button class="icon-action-btn edit" title="Editar datos y sectores" onclick="window.SNAF_APP.openPersonModal('${person.id}')">
-                <i class="ph ph-pencil-simple" style="font-size: 15px;"></i>
+                <i class="fi fi-rr-pencil" style="font-size: 14px;"></i>
               </button>
               <button class="icon-action-btn delete" title="Eliminar agente" onclick="window.SNAF_APP.deletePerson('${person.id}')">
-                <i class="ph ph-trash" style="font-size: 15px;"></i>
+                <i class="fi fi-rr-trash" style="font-size: 14px;"></i>
               </button>
             </div>
           </td>
@@ -1612,7 +1612,7 @@
               <div style="flex: 1; min-width: 0;">
                 <div style="font-weight: 700; font-size: 14.5px; color: var(--slate-900); display: flex; align-items: center; gap: 6px;">
                   ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
-                  ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b;">⭐</span>` : ''}
+                  ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b;"><i class="fi fi-sr-star" style="font-size: 12px;"></i></span>` : ''}
                 </div>
                 <div style="font-size: 12px; color: #0284c7; font-weight: 600;">${escapeHtml(person.profesion || 'Administrativo')}</div>
                 <div style="font-size: 11px; color: #64748b;">CUIL: ${escapeHtml(person.cuil || 'S/D')}</div>
@@ -1638,13 +1638,13 @@
 
           <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--slate-100);">
             <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openViewPersonModal('${person.id}')" title="Ver ficha completa">
-              👁️ Ver Ficha
+              <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Ver Ficha
             </button>
             <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openPersonModal('${person.id}')" title="Editar datos">
-              ✏️ Editar
+              <i class="fi fi-rr-pencil" style="font-size: 12px;"></i> Editar
             </button>
             <button class="btn btn-danger btn-sm" onclick="window.SNAF_APP.deletePerson('${person.id}')" title="Eliminar">
-              🗑️
+              <i class="fi fi-rr-trash" style="font-size: 12px;"></i>
             </button>
           </div>
         </div>
@@ -1703,7 +1703,7 @@
               <span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: ${sector.color || '#3b82f6'};"></span>
               ${escapeHtml(sector.nombre)}
             </div>
-            ${sector.direccion ? `<div style="font-size: 11px; color: #64748b; margin-left: 18px;">📍 ${escapeHtml(sector.direccion)}</div>` : ''}
+            ${sector.direccion ? `<div style="font-size: 11px; color: #64748b; margin-left: 18px; display: flex; align-items: center; gap: 4px; margin-top: 2px;"><i class="fi fi-rr-marker" style="font-size: 11px;"></i> ${escapeHtml(sector.direccion)}</div>` : ''}
           </td>
           <td>
             <span class="sector-type-badge">${escapeHtml(sector.tipo || 'Sector')}</span>
@@ -1718,16 +1718,16 @@
           <td>
             <div style="display: flex; align-items: center; gap: 8px;">
               <span style="font-weight: 700; font-size: 14px;">${staff.length}</span>
-              ${multiCount > 0 ? `<span class="multi-sector-counter">⭐ ${multiCount} multi</span>` : ''}
+              ${multiCount > 0 ? `<span class="multi-sector-counter"><i class="fi fi-sr-star" style="font-size: 10px; margin-right: 3px;"></i>${multiCount} multi</span>` : ''}
             </div>
           </td>
           <td style="text-align: right;">
             <div class="action-buttons" style="justify-content: flex-end;">
               <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openSectorDrawer('${sector.id}')" title="Ver dotación">
-                👁️ Dotación
+                <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Dotación
               </button>
               <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openSectorModal('${sector.id}')" title="Editar sector">
-                ✏️ Editar
+                <i class="fi fi-rr-pencil" style="font-size: 12px;"></i> Editar
               </button>
             </div>
           </td>
@@ -1842,10 +1842,10 @@
               <td>
                 <div style="display: flex; gap: 6px;">
                   <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openViewPersonModal('${p.id}')" title="Ver ficha">
-                    👁️ Ver
+                    <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Ver
                   </button>
                   <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openPersonModal('${p.id}')" title="Editar">
-                    ✏️ Editar
+                    <i class="fi fi-rr-pencil" style="font-size: 12px;"></i> Editar
                   </button>
                 </div>
               </td>
@@ -1980,7 +1980,7 @@
       const person = state.personal.find(p => p.id === personId);
       if (!person) return;
 
-      titleEl.innerHTML = `✏️ Editar Personal: <strong>${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}</strong>`;
+      titleEl.innerHTML = `<i class="fi fi-rr-pencil" style="font-size: 15px;"></i> Editar Personal: <strong>${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}</strong>`;
       document.getElementById('p-id').value = person.id;
       document.getElementById('p-apellidos').value = person.apellidos || '';
       document.getElementById('p-nombres').value = person.nombres || '';
@@ -2009,7 +2009,7 @@
       }
     } else {
       // New Person
-      titleEl.innerHTML = `➕ Registrar Nuevo Personal`;
+      titleEl.innerHTML = `<i class="fi fi-rr-user-add" style="font-size: 15px;"></i> Registrar Nuevo Personal`;
       document.getElementById('p-id').value = '';
       document.getElementById('p-apellidos').value = '';
       document.getElementById('p-nombres').value = '';
@@ -2099,9 +2099,9 @@
     const permisosEl = document.getElementById('vp-gde-permisos');
     if (permisosEl) {
       const perms = [];
-      if (person.caratulador) perms.push('📁 Caratulador');
-      if (person.asignador) perms.push('📤 Asignador');
-      permisosEl.textContent = perms.length > 0 ? perms.join(' · ') : 'Ninguno asignado';
+      if (person.caratulador) perms.push('<i class="fi fi-rr-folder" style="font-size: 12px;"></i> Caratulador');
+      if (person.asignador) perms.push('<i class="fi fi-rr-upload" style="font-size: 12px;"></i> Asignador');
+      permisosEl.innerHTML = perms.length > 0 ? perms.join(' &middot; ') : 'Ninguno asignado';
     }
 
     setText('vp-gde-cap', person.capacitacion_gde);
@@ -2178,7 +2178,7 @@
       <div class="sector-row-top">
         <span class="sector-row-badge">Sector Asignado #${rowIdx}</span>
         <button type="button" class="remove-sector-btn" title="Quitar este sector">
-          🗑️ Quitar
+          <i class="fi fi-rr-trash" style="font-size: 12px;"></i> Quitar
         </button>
       </div>
 
@@ -2397,7 +2397,7 @@
                 <div style="flex: 1;">
                   <div style="font-weight: 700; font-size: 13.5px; color: var(--slate-900);">
                     ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
-                    ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;">⭐</span>` : ''}
+                    ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;"><i class="fi fi-sr-star" style="font-size: 11px;"></i></span>` : ''}
                   </div>
                   <div style="font-size: 11.5px; color: #0284c7; font-weight: 600;">
                     ${escapeHtml(roleLabel)}
@@ -2405,17 +2405,17 @@
                   ${person.correo ? `<div style="font-size: 11px; color: #64748b; margin-top: 2px;">${escapeHtml(person.correo)}</div>` : ''}
                   ${otherSectors.length > 0 ? `
                     <div style="margin-top: 5px; font-size: 10.5px; color: #b45309; background: #fef3c7; padding: 2px 6px; border-radius: 4px; display: inline-block;">
-                      ⭐ Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
+                      <i class="fi fi-sr-star" style="font-size: 10px; margin-right: 3px;"></i>Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
                     </div>
                   ` : ''}
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
                 <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openViewPersonModal('${person.id}')" title="Ver ficha completa" style="padding: 4px 8px; font-size: 12px; background: white;">
-                  👁️ Ver
+                  <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Ver
                 </button>
                 <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openPersonModal('${person.id}')" title="Editar este encargado" style="padding: 4px 8px; font-size: 12px; background: white;">
-                  ✏️ Editar
+                  <i class="fi fi-rr-pencil" style="font-size: 12px;"></i> Editar
                 </button>
               </div>
             </div>
@@ -2445,10 +2445,10 @@
     if (sector.num_opd && opdExtra) {
       opdExtra.style.display = 'block';
       opdExtra.innerHTML = `
-        ${sector.direccion ? `<div><strong>📍 Sede:</strong> ${escapeHtml(sector.direccion)}</div>` : ''}
-        ${sector.horario ? `<div><strong>⏰ Horario:</strong> ${escapeHtml(sector.horario)}</div>` : ''}
-        ${sector.telefono_guardia ? `<div><strong>📞 Guardia WIN:</strong> ${escapeHtml(sector.telefono_guardia)}</div>` : ''}
-        ${sector.cobertura ? `<div><strong>🗺️ Cobertura:</strong> ${escapeHtml(sector.cobertura)}</div>` : ''}
+        ${sector.direccion ? `<div><strong><i class="fi fi-rr-marker" style="font-size: 11px;"></i> Sede:</strong> ${escapeHtml(sector.direccion)}</div>` : ''}
+        ${sector.horario ? `<div><strong><i class="fi fi-rr-clock" style="font-size: 11px;"></i> Horario:</strong> ${escapeHtml(sector.horario)}</div>` : ''}
+        ${sector.telefono_guardia ? `<div><strong><i class="fi fi-rr-phone-call" style="font-size: 11px;"></i> Guardia WIN:</strong> ${escapeHtml(sector.telefono_guardia)}</div>` : ''}
+        ${sector.cobertura ? `<div><strong><i class="fi fi-rr-map" style="font-size: 11px;"></i> Cobertura:</strong> ${escapeHtml(sector.cobertura)}</div>` : ''}
       `;
     } else if (opdExtra) {
       opdExtra.style.display = 'none';
@@ -2476,7 +2476,7 @@
               <div style="flex: 1;">
                 <div style="font-weight: 700; font-size: 13.5px; color: var(--slate-900);">
                   ${escapeHtml(person.apellidos)}, ${escapeHtml(person.nombres)}
-                  ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;">⭐</span>` : ''}
+                  ${person.is_multi_sector ? `<span title="Multi-sector" style="color: #f59e0b; margin-left: 4px;"><i class="fi fi-sr-star" style="font-size: 11px;"></i></span>` : ''}
                 </div>
                 <div style="font-size: 12px; color: #0284c7; font-weight: 600;">
                   ${escapeHtml(thisRole?.funcion || person.profesion || 'Personal')}
@@ -2486,7 +2486,7 @@
 
                 ${otherSectors.length > 0 ? `
                   <div style="margin-top: 6px; font-size: 10.5px; color: #b45309; background: #fef3c7; padding: 2px 6px; border-radius: 4px; display: inline-block;">
-                    ⭐ Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
+                    <i class="fi fi-sr-star" style="font-size: 10px; margin-right: 3px;"></i>Cumple funciones también en: ${otherSectors.map(o => escapeHtml(o.sector_nombre)).join(' + ')}
                   </div>
                 ` : ''}
               </div>
@@ -2494,10 +2494,10 @@
 
             <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
               <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openViewPersonModal('${person.id}')" title="Ver ficha completa" style="padding: 4px 8px; font-size: 12px;">
-                👁️ Ver
+                <i class="fi fi-rr-eye" style="font-size: 12px;"></i> Ver
               </button>
               <button class="btn btn-outline btn-sm" onclick="window.SNAF_APP.openPersonModal('${person.id}')" title="Editar este agente" style="padding: 4px 8px; font-size: 12px;">
-                ✏️ Editar
+                <i class="fi fi-rr-pencil" style="font-size: 12px;"></i> Editar
               </button>
             </div>
           </div>
@@ -2631,7 +2631,7 @@
 
     let html = `
       <div class="searchable-dropdown-item empty-option" data-value="">
-        <span>✖ Sin responsable asignado (dejar vacío)</span>
+        <span><i class="fi fi-rr-cross-small" style="font-size: 14px; margin-right: 3px;"></i>Sin responsable asignado (dejar vacío)</span>
       </div>
     `;
 
@@ -2678,7 +2678,7 @@
     if (sectorId) {
       const sector = getSectorById(sectorId);
       if (!sector) return;
-      titleEl.innerHTML = `✏️ Editar Sector: <strong>${escapeHtml(sector.nombre)}</strong>`;
+      titleEl.innerHTML = `<i class="fi fi-rr-pencil" style="font-size: 15px;"></i> Editar Sector: <strong>${escapeHtml(sector.nombre)}</strong>`;
       document.getElementById('sec-id').value = sector.id;
       document.getElementById('sec-nombre').value = sector.nombre || '';
       document.getElementById('sec-tipo').value = sector.tipo || 'Área Operativa';
@@ -2688,7 +2688,7 @@
       document.getElementById('sec-cargo').value = sector.cargo_responsable || '';
       document.getElementById('sec-desc').value = sector.descripcion || '';
     } else {
-      titleEl.innerHTML = `➕ Crear Nuevo Sector / Área`;
+      titleEl.innerHTML = `<i class="fi fi-rr-plus" style="font-size: 15px;"></i> Crear Nuevo Sector / Área`;
       document.getElementById('sec-id').value = '';
       document.getElementById('sec-nombre').value = '';
       document.getElementById('sec-tipo').value = 'Área Operativa';
@@ -2905,7 +2905,7 @@
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `
-      <span>${type === 'success' ? '✔' : 'ℹ'}</span>
+      <i class="fi ${type === 'success' ? 'fi-rr-check' : 'fi-rr-info'}" style="font-size: 14px;"></i>
       <span>${escapeHtml(message)}</span>
     `;
 

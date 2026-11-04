@@ -3,14 +3,20 @@
    Gobierno de la Provincia de Jujuy
    ========================================================================== */
 
-@import url("../vendor/phosphor/style.css");
-@import url("vendor/phosphor/style.css");
-@import url("https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css");
+@import url("../vendor/flaticon/uicons-regular-rounded.css");
+@import url("../vendor/flaticon/uicons-solid-rounded.css");
+@import url("vendor/flaticon/uicons-regular-rounded.css");
+@import url("vendor/flaticon/uicons-solid-rounded.css");
+@import url("https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css");
+@import url("https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css");
 
-/* Phosphor Icons - Utility */
+/* Flaticon UIcons - Utility */
+.fi,
 .ph {
   vertical-align: middle;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   font-size: inherit;
 }
@@ -307,10 +313,10 @@ body {
   color: var(--slate-500);
 }
 
-.kpi-pill.primary svg, .kpi-pill.primary .ph { color: #2563eb; font-size: 15px; }
-.kpi-pill.emerald svg, .kpi-pill.emerald .ph { color: #059669; font-size: 15px; }
-.kpi-pill.amber svg, .kpi-pill.amber .ph { color: #d97706; font-size: 15px; }
-.kpi-pill.purple svg, .kpi-pill.purple .ph { color: #7c3aed; font-size: 15px; }
+.kpi-pill.primary svg, .kpi-pill.primary .ph, .kpi-pill.primary .fi { color: #2563eb; font-size: 14px; }
+.kpi-pill.emerald svg, .kpi-pill.emerald .ph, .kpi-pill.emerald .fi { color: #059669; font-size: 14px; }
+.kpi-pill.amber svg, .kpi-pill.amber .ph, .kpi-pill.amber .fi { color: #d97706; font-size: 14px; }
+.kpi-pill.purple svg, .kpi-pill.purple .ph, .kpi-pill.purple .fi { color: #7c3aed; font-size: 14px; }
 
 .kpi-divider {
   width: 1px;
@@ -662,13 +668,14 @@ body {
   max-width: 380px;
 }
 .search-box svg,
-.search-box .ph {
+.search-box .ph,
+.search-box .fi {
   position: absolute;
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--slate-400);
-  font-size: 15px;
+  font-size: 14px;
   pointer-events: none;
 }
 .search-box input {
@@ -1194,8 +1201,9 @@ body {
   line-height: 1.2;
 }
 
-.btn-toggle-staff .ph {
-  font-size: 13px;
+.btn-toggle-staff .ph,
+.btn-toggle-staff .fi {
+  font-size: 12px;
   line-height: 1;
 }
 
@@ -1270,8 +1278,9 @@ body {
   transition: all 0.15s ease;
 }
 
-.card-collapse-toggle .ph {
-  font-size: 12px;
+.card-collapse-toggle .ph,
+.card-collapse-toggle .fi {
+  font-size: 11px;
   line-height: 1;
   flex-shrink: 0;
 }
