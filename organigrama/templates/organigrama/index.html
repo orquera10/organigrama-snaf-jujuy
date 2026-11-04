@@ -29,29 +29,24 @@
         <div class="brand-divider-vertical"></div>
         <div class="brand-app-title">
           <span class="brand-title-badge admin">Panel de Gestión</span>
-          <span class="brand-title-sub">Organigrama & Dotación Oficial</span>
         </div>
       </div>
 
       <div class="header-top-right">
-        <a href="/admin/auth/user/" target="_blank" class="btn btn-secondary btn-sm" title="Agregar o modificar usuarios, contraseñas y permisos (Panel Admin)">
-          <i class="fi fi-rr-user-gear" style="font-size: 13px;"></i>
-          <span>Usuarios / Admin</span>
+        <a href="/admin/auth/user/" target="_blank" class="btn btn-secondary btn-sm" title="Usuarios y Permisos (Panel Admin)" style="width: 32px; height: 32px; padding: 0; justify-content: center;">
+          <i class="fi fi-rr-user-gear" style="font-size: 14px;"></i>
         </a>
 
-        <a href="{% url 'organigrama' %}" target="_blank" class="btn btn-secondary btn-sm" title="Abrir Organigrama en Modo Consulta">
-          <i class="fi fi-rr-arrow-up-right-from-square" style="font-size: 12.5px;"></i>
-          <span>Vista Organigrama</span>
+        <a href="{% url 'organigrama' %}" target="_blank" class="btn btn-secondary btn-sm" title="Abrir Vista Organigrama (Modo Consulta)" style="width: 32px; height: 32px; padding: 0; justify-content: center;">
+          <i class="fi fi-rr-arrow-up-right-from-square" style="font-size: 13.5px;"></i>
         </a>
 
         <div class="user-session-badge">
           <i class="fi fi-rr-user" style="font-size: 13px; color: #64748b;"></i>
           <span class="user-name">{{ request.user.first_name|default:request.user.username }}</span>
-          <span class="role-badge role-admin">ADMIN</span>
           <div class="user-session-divider"></div>
-          <a href="{% url 'logout' %}" title="Cerrar Sesión" class="logout-link">
-            <span>Salir</span>
-            <i class="fi fi-rr-sign-out-alt" style="font-size: 12.5px;"></i>
+          <a href="{% url 'logout' %}" title="Cerrar Sesión" class="logout-link" style="padding: 2px 4px;">
+            <i class="fi fi-rr-sign-out-alt" style="font-size: 13.5px;"></i>
           </a>
         </div>
       </div>
@@ -247,7 +242,7 @@
             <div class="legend-item"><div class="legend-color" style="background: #0284c7;"></div> Direcciones / Coord.</div>
             <div class="legend-item"><div class="legend-color" style="background: #059669;"></div> Áreas Operativas / Contables</div>
             <div class="legend-item"><div class="legend-color" style="background: #7c3aed;"></div> Dispositivos / Programas</div>
-            <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> <i class="fi fi-sr-star" style="color: #f59e0b; font-size: 11px;"></i> Multi-Sector</div>
+            <div class="legend-item"><i class="fi fi-sr-star" style="color: #f59e0b; font-size: 11px;"></i> Multi-Sector</div>
           </div>
 
           <!-- Botones de Zoom flotantes -->

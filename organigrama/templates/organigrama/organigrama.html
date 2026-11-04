@@ -55,30 +55,22 @@
         <div class="brand-divider-vertical"></div>
         <div class="brand-app-title">
           <span class="brand-title-badge">Organigrama Institucional</span>
-          <span class="brand-title-sub">Vista Oficial de Consulta</span>
         </div>
       </div>
 
       <div class="header-top-right">
         {% if request.user.is_staff or request.user.is_superuser %}
-          <a href="{% url 'gestion' %}" class="btn btn-primary btn-sm" title="Ir al Panel de Gestión y Edición">
-            <i class="fi fi-rr-settings" style="font-size: 13px;"></i>
-            <span>Panel de Gestión</span>
+          <a href="{% url 'gestion' %}" class="btn btn-primary btn-sm" title="Ir al Panel de Gestión y Edición" style="width: 32px; height: 32px; padding: 0; justify-content: center;">
+            <i class="fi fi-rr-settings" style="font-size: 14px;"></i>
           </a>
         {% endif %}
 
         <div class="user-session-badge">
           <i class="fi fi-rr-user" style="font-size: 13px; color: #64748b;"></i>
           <span class="user-name">{{ request.user.first_name|default:request.user.username }}</span>
-          {% if request.user.is_staff %}
-            <span class="role-badge role-admin">ADMIN</span>
-          {% else %}
-            <span class="role-badge role-viewer">CONSULTA</span>
-          {% endif %}
           <div class="user-session-divider"></div>
-          <a href="{% url 'logout' %}" title="Cerrar Sesión" class="logout-link">
-            <span>Salir</span>
-            <i class="fi fi-rr-sign-out-alt" style="font-size: 12.5px;"></i>
+          <a href="{% url 'logout' %}" title="Cerrar Sesión" class="logout-link" style="padding: 2px 4px;">
+            <i class="fi fi-rr-sign-out-alt" style="font-size: 13.5px;"></i>
           </a>
         </div>
       </div>
@@ -88,7 +80,6 @@
     <div class="header-bottom-row">
       <div class="header-bottom-tagline" style="display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #64748b;">
         <span class="public-badge" style="padding: 3px 10px; font-size: 11.5px;"><span class="pulse-dot"></span> Modo Consulta</span>
-        <span>Estructura orgánica y dotación oficial de la Secretaría</span>
       </div>
 
       <!-- Header Live Metrics -->
@@ -197,7 +188,7 @@
           <div class="legend-item"><div class="legend-color" style="background: #0284c7;"></div> Direcciones / Coord.</div>
           <div class="legend-item"><div class="legend-color" style="background: #059669;"></div> Áreas Operativas / Contables</div>
           <div class="legend-item"><div class="legend-color" style="background: #7c3aed;"></div> Dispositivos / Programas</div>
-          <div class="legend-item"><div class="legend-color" style="background: #f59e0b;"></div> <i class="fi fi-sr-star" style="color: #f59e0b; font-size: 11px;"></i> Multi-Sector</div>
+          <div class="legend-item"><i class="fi fi-sr-star" style="color: #f59e0b; font-size: 11px;"></i> Multi-Sector</div>
         </div>
 
         <!-- Botones de Zoom flotantes -->
