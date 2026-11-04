@@ -599,10 +599,11 @@
         'prensa': 4,
         'planificacion': 5,
         'coord-adm': 6,
-        'dir-ninez': 7,
-        'dir-dispositivos': 8
+        'coord-entornos': 7,
+        'dir-ninez': 90,
+        'dir-dispositivos': 91
       };
-      children.sort((a, b) => (topOrder[a.id] || 99) - (topOrder[b.id] || 99));
+      children.sort((a, b) => (topOrder[a.id] || 50) - (topOrder[b.id] || 50));
     }
 
     if (children.length > 0) {
@@ -1207,10 +1208,11 @@
         'prensa': 4,
         'planificacion': 5,
         'coord-adm': 6,
-        'dir-ninez': 7,
-        'dir-dispositivos': 8
+        'coord-entornos': 7,
+        'dir-ninez': 90,
+        'dir-dispositivos': 91
       };
-      children.sort((a, b) => (topOrder[a.id] || 99) - (topOrder[b.id] || 99));
+      children.sort((a, b) => (topOrder[a.id] || 50) - (topOrder[b.id] || 50));
     }
 
     children.forEach(ch => {
