@@ -923,13 +923,13 @@ body {
   display: block;
 }
 
-/* Dedicated Toggle Button Container (directly below the card) */
+/* Dedicated Toggle Button Container (overlapping bottom center of the card) */
 .toggle-btn-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 8px;
-  margin-bottom: 2px;
+  margin-top: -10px;
+  margin-bottom: 0;
   z-index: 10;
   position: relative;
 }
@@ -941,7 +941,7 @@ body {
   width: 270px;
   min-width: 260px;
   border-radius: 9px;
-  padding: 12px 14px;
+  padding: 13px 14px 16px 14px;
   text-align: center;
   position: relative;
   box-sizing: border-box;
@@ -969,21 +969,22 @@ body {
   100% { transform: scale(1); }
 }
 
-/* Nivel 0: Secretaría (Vibrant Magenta -> Purple -> Blue Gradient) */
+/* Nivel 0: Secretaría (#db0aff -> #485aff) */
 .sector-card.level-0 {
-  background: linear-gradient(90deg, #d900df 0%, #7b2cbf 50%, #3a86ff 100%) !important;
+  background: linear-gradient(90deg, #db0aff 0%, #485aff 100%) !important;
   border: none !important;
-  box-shadow: 0 6px 20px rgba(123, 44, 191, 0.35) !important;
+  box-shadow: 0 6px 20px rgba(123, 44, 191, 0.32) !important;
   color: #ffffff !important;
 }
 
 .sector-card.level-0 .sector-title {
   color: #ffffff !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  font-weight: 700;
 }
 
 .sector-card.level-0 .sector-person-name {
-  color: rgba(255, 255, 255, 0.95) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-weight: 500;
 }
 
 .sector-card.level-0 .btn-toggle-staff {
@@ -1005,109 +1006,105 @@ body {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Nivel 1: Direcciones y Programas (Fondo cálido ámbar/dorado SIN BORDE AZUL) */
+/* Nivel 1: Coordinaciones y Direcciones (#4e66ff -> #788aff) */
 .sector-card.level-1 {
-  border: 1px solid rgba(245, 158, 11, 0.3) !important;
-  background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%) !important;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.08) !important;
-  color: #78350f !important;
+  border: none !important;
+  background: linear-gradient(90deg, #4e66ff 0%, #788aff 100%) !important;
+  box-shadow: 0 5px 16px rgba(78, 102, 255, 0.24) !important;
+  color: #ffffff !important;
 }
 
 .sector-card.level-1 .sector-title {
-  color: #78350f !important;
+  color: #ffffff !important;
   font-weight: 700;
 }
 
 .sector-card.level-1 .sector-person-name {
-  color: #92400e !important;
-  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92) !important;
+  font-weight: 500;
 }
 
 .sector-card.level-1 .btn-toggle-staff {
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(217, 119, 6, 0.3);
-  color: #92400e;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  color: #ffffff;
 }
 .sector-card.level-1 .btn-toggle-staff:hover {
-  background: rgba(245, 158, 11, 0.22);
+  background: rgba(255, 255, 255, 0.32);
 }
 
 .sector-card.level-1 .staff-expanded-item {
-  border-bottom: 1px solid rgba(245, 158, 11, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 .sector-card.level-1 .staff-expanded-name {
-  color: #78350f;
+  color: #ffffff;
   font-weight: 600;
 }
 .sector-card.level-1 .staff-expanded-role {
-  color: #92400e;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-/* Nivel 2: Coordinaciones y Departamentos (Fondo pastel menta suave SIN BORDE AZUL) */
+/* Nivel 2: Sub-áreas y Departamentos (#efd899 -> #f2e9d1 con fuente azul marino #273276) */
 .sector-card.level-2 {
-  border: 1px solid rgba(16, 185, 129, 0.3) !important;
-  background: linear-gradient(180deg, #f0fdf4 0%, #d1fae5 100%) !important;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.08) !important;
-  color: #064e3b !important;
+  border: none !important;
+  background: linear-gradient(90deg, #efd899 0%, #f2e9d1 100%) !important;
+  box-shadow: 0 4px 14px rgba(180, 145, 60, 0.15) !important;
+  color: #273276 !important;
 }
 
 .sector-card.level-2 .sector-title {
-  color: #064e3b !important;
+  color: #273276 !important;
   font-weight: 700;
 }
 
 .sector-card.level-2 .sector-person-name {
-  color: #065f46 !important;
-  font-weight: 600;
+  color: #323c79 !important;
+  font-weight: 500;
 }
 
 .sector-card.level-2 .btn-toggle-staff {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(5, 150, 105, 0.28);
-  color: #047857;
+  background: rgba(39, 50, 118, 0.1);
+  border: 1px solid rgba(39, 50, 118, 0.26);
+  color: #273276;
 }
 .sector-card.level-2 .btn-toggle-staff:hover {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(39, 50, 118, 0.18);
 }
 
 .sector-card.level-2 .staff-expanded-item {
-  border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+  border-bottom: 1px solid rgba(39, 50, 118, 0.15);
 }
 .sector-card.level-2 .staff-expanded-name {
-  color: #064e3b;
+  color: #273276;
   font-weight: 600;
 }
 .sector-card.level-2 .staff-expanded-role {
-  color: #047857;
+  color: #323c79;
 }
 
-/* Nivel 3 y superiores: TODO EN GRIS PLATEADO METÁLICO (Exacto a la imagen Medidas Privativas de Libertad)
-   - Sin bordes (border: none !important;)
-   - Degradé horizontal plateado metálico (linear-gradient(90deg, #8e949e 0%, #c4c8ce 50%, #f6f5f1 100%))
-   - Tipografía nítida oscura (color: #0f172a)
-*/
+/* Nivel 3 y superiores: Degradé gris plateado cálido (#aaaaa9 -> #f5f2ea) con fuente negra */
 .sector-card.level-3,
 .sector-card.level-4,
 .sector-card.level-5 {
-  background: linear-gradient(90deg, #8e949e 0%, #c4c8ce 50%, #f6f5f1 100%) !important;
+  background: linear-gradient(90deg, #aaaaa9 0%, #f5f2ea 100%) !important;
   border: none !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
-  color: #0f172a !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+  color: #000000 !important;
 }
 
 .sector-card.level-3 .sector-title,
 .sector-card.level-4 .sector-title,
 .sector-card.level-5 .sector-title {
-  color: #0f172a !important;
+  color: #000000 !important;
   font-weight: 700;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: none;
 }
 
 .sector-card.level-3 .sector-person-name,
 .sector-card.level-4 .sector-person-name,
 .sector-card.level-5 .sector-person-name {
-  color: #1e293b !important;
-  font-weight: 600;
+  color: #111827 !important;
+  font-weight: 500;
 }
 
 .sector-card.level-3 .btn-toggle-staff,
@@ -1260,53 +1257,54 @@ body {
   margin-top: 1px;
 }
 
-/* Card Collapse Toggle Button (Subárbol jerárquico) */
+/* Card Collapse Toggle Button (Subárbol jerárquico - exacto al diseño) */
 .card-collapse-toggle {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 6px 16px;
-  border-radius: 999px;
-  font-size: 12.5px;
-  font-weight: 600;
-  line-height: 1.35;
+  gap: 2px;
+  padding: 5px 18px 5px 18px;
+  min-width: 82px;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.15;
   cursor: pointer;
   white-space: nowrap;
   text-align: center;
   transition: all 0.15s ease;
 }
 
-.card-collapse-toggle .ph,
-.card-collapse-toggle .fi {
-  font-size: 13.5px;
-  line-height: 1;
+.card-collapse-toggle .collapse-chevron-svg {
+  display: block;
   flex-shrink: 0;
 }
 
 .card-collapse-toggle.is-collapsed {
-  background: #2563eb;
-  border: 1px solid #1d4ed8;
+  background: #4d65ff;
+  border: 1px solid #3f57eb;
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 3px 8px rgba(77, 101, 255, 0.35);
 }
 
 .card-collapse-toggle.is-collapsed:hover {
-  background: #1d4ed8;
+  background: #3d55eb;
   transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(77, 101, 255, 0.45);
 }
 
 .card-collapse-toggle.is-expanded {
-  background: #ffffff;
-  border: 1px solid var(--slate-300);
-  color: var(--slate-600);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  background: #4d65ff;
+  border: 1px solid #3f57eb;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(77, 101, 255, 0.28);
+  padding: 4px 14px;
+  min-width: 68px;
 }
 
 .card-collapse-toggle.is-expanded:hover {
-  background: #fef2f2;
-  border-color: #fca5a5;
-  color: #b91c1c;
+  background: #3d55eb;
   transform: translateY(-1px);
 }
 

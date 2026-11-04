@@ -1073,21 +1073,23 @@
       }).filter(Boolean).join(' / ');
 
       const label = children.length === 1
-        ? '1 sector'
-        : `${children.length} sectores`;
+        ? '1 Sector'
+        : `${children.length} Sectores`;
 
       if (isCollapsed) {
         toggleBtn.innerHTML = `
-          <i class="fi fi-rr-sitemap" style="font-size: 13.5px;"></i>
           <span>${label}</span>
-          <i class="fi fi-rr-angle-small-down" style="font-size: 14px; margin-left: -2px;"></i>
+          <svg class="collapse-chevron-svg" width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 2L8 7.5L13.5 2" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         `;
         toggleBtn.title = childNames ? `Desplegar ${label}: ${childNames}` : `Desplegar ${label}`;
       } else {
         toggleBtn.innerHTML = `
-          <i class="fi fi-rr-sitemap" style="font-size: 13.5px;"></i>
           <span>Ocultar</span>
-          <i class="fi fi-rr-angle-small-up" style="font-size: 14px; margin-left: -2px;"></i>
+          <svg class="collapse-chevron-svg" width="16" height="9" viewBox="0 0 16 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.5 7L8 1.5L13.5 7" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         `;
         toggleBtn.title = `Ocultar ${label}`;
       }
