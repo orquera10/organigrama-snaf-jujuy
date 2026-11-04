@@ -1078,16 +1078,16 @@
 
       if (isCollapsed) {
         toggleBtn.innerHTML = `
-          <i class="fi fi-rr-sitemap" style="font-size: 11px;"></i>
+          <i class="fi fi-rr-sitemap" style="font-size: 13.5px;"></i>
           <span>${label}</span>
-          <i class="fi fi-rr-angle-small-down" style="font-size: 11px; margin-left: -2px;"></i>
+          <i class="fi fi-rr-angle-small-down" style="font-size: 14px; margin-left: -2px;"></i>
         `;
         toggleBtn.title = childNames ? `Desplegar ${label}: ${childNames}` : `Desplegar ${label}`;
       } else {
         toggleBtn.innerHTML = `
-          <i class="fi fi-rr-sitemap" style="font-size: 11px;"></i>
+          <i class="fi fi-rr-sitemap" style="font-size: 13.5px;"></i>
           <span>Ocultar</span>
-          <i class="fi fi-rr-angle-small-up" style="font-size: 11px; margin-left: -2px;"></i>
+          <i class="fi fi-rr-angle-small-up" style="font-size: 14px; margin-left: -2px;"></i>
         `;
         toggleBtn.title = `Ocultar ${label}`;
       }
