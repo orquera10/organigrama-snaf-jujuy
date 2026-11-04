@@ -245,8 +245,19 @@
         }
       });
 
-      // Wheel Zoom
+      // Wheel Zoom (allow scrolling inside expanded staff lists without zooming canvas)
       viewport.addEventListener('wheel', (e) => {
+        const expandedCard = e.target.closest('.sector-card.expanded-staff');
+        if (expandedCard) {
+          const listEl = expandedCard.querySelector('.staff-expanded-list');
+          if (listEl && listEl.scrollHeight > listEl.clientHeight) {
+            if (!e.target.closest('.staff-expanded-list')) {
+              e.preventDefault();
+              listEl.scrollTop += e.deltaY;
+            }
+            return;
+          }
+        }
         e.preventDefault();
         const delta = e.deltaY < 0 ? 0.08 : -0.08;
         zoomOrganigram(delta, e.clientX, e.clientY);
