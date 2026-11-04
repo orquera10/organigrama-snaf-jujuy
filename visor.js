@@ -630,29 +630,24 @@
         return n;
       }).filter(Boolean).join(' / ');
 
-      let label = children.length === 1
-        ? `1 Área (${childNames})`
-        : `${children.length} Áreas (${childNames})`;
-
-      if (sector.id === 'sec-snaf') label = `${children.length} Áreas Principales`;
-      else if (sector.id === 'oficinas-opd') label = `${children.length} Oficinas de Protección de Derechos (OPD)`;
-      else if (sector.id === 'disp-cuidado-comunitario' && children.length > 4) label = `${children.length} Dependencias (SEDE + CDIs / CDDs)`;
-      else if (sector.id === 'coord-adm' && children.length > 4) label = `${children.length} Áreas Administrativas`;
-      else if (sector.id === 'dir-ninez' && children.length > 4) label = `${children.length} Coordinaciones y Áreas`;
-      else if (sector.id === 'dir-dispositivos' && children.length > 4) label = `${children.length} Áreas y Coordinaciones de Cuidados`;
+      const label = children.length === 1
+        ? '1 sector'
+        : `${children.length} sectores`;
 
       if (isCollapsed) {
         toggleBtn.innerHTML = `
-          <i class="fi fi-rr-plus" style="font-size: 10px;"></i>
+          <i class="fi fi-rr-sitemap" style="font-size: 11px;"></i>
           <span>${label}</span>
+          <i class="fi fi-rr-angle-small-down" style="font-size: 11px; margin-left: -2px;"></i>
         `;
-        toggleBtn.title = `Clic para ver ${label}`;
+        toggleBtn.title = childNames ? `Desplegar ${label}: ${childNames}` : `Desplegar ${label}`;
       } else {
         toggleBtn.innerHTML = `
-          <i class="fi fi-rr-minus" style="font-size: 10px;"></i>
-          <span>Colapsar</span>
+          <i class="fi fi-rr-sitemap" style="font-size: 11px;"></i>
+          <span>Ocultar</span>
+          <i class="fi fi-rr-angle-small-up" style="font-size: 11px; margin-left: -2px;"></i>
         `;
-        toggleBtn.title = 'Colapsar esta rama';
+        toggleBtn.title = `Ocultar ${label}`;
       }
 
       toggleBtn.addEventListener('click', (e) => {
